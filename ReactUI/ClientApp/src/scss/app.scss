@@ -1,0 +1,11 @@
+
+@import './components';
+@import './variables';
+@import './sidebar';
+@import './navigation-header';
+@import './dashboard';
+
+#root {
+    background-color: $background-color;
+    display: flex;
+}

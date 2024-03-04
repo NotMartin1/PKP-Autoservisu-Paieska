@@ -1,0 +1,101 @@
+@import './variables';
+@import './fonts';
+
+.centered-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .centered-form {
+    min-width: 30vw;
+    padding: 20px;
+    min-height: 40vh;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: $main-color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
+    .centered-form-content {
+      margin: 20px;
+      font-size: 16px;
+    }
+  }
+  
+  .centered-form h2 {
+    text-align: center;
+  }
+  
+  .centered-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .centered-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    box-sizing: border-box;
+  }
+  
+  .centered-form .button {
+    width: 100%;
+    padding: 10px;
+    background-color: $action-color;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .centered-form .button:hover {
+    background-color: $action-color-active;
+  }
+
+  .form-input label {
+    color: $text-color;
+    font-size: 25px;
+  }
+
+  .form-input input {
+    border: none;
+    background-color: $main-color;
+    border: 2px solid $action-color;
+    border-radius: 0px;
+    color: $text-color;
+    margin-top: 20px;
+    font-size: 25px;
+    &.is-invalid {
+      border: 2px solid $color-danger;
+    }
+  }
+
+  .form-input *:focus {
+    border: none;
+    background-color: $main-color;
+    border: 2px solid $action-color;
+    border-radius: 0px;
+    outline: none !important;
+    box-shadow: none;
+    color: $text-color
+  }
+
+  .btn {
+    min-width: 50px;
+    font-size: 19px;
+  }
+
+  .btn-primary {
+    background-color: $action-color !important;
+    border-color: $action-color !important;
+    &:hover {
+      background-color: $action-color-active !important;
+    }
+  }
+
+  .btn-disabled {
+    background-color: $action-color-secondary;
+    cursor: default !important;
+  }
