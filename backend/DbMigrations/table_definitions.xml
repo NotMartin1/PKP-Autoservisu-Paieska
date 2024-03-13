@@ -1,0 +1,110 @@
+<dbMigrations>
+    <migration>
+		CREATE TABLE IF NOT EXISTS `client` (
+			`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            `Username` VARCHAR(255) NOT NULL,
+            `Password` VARCHAR(255) NOT NULL,
+            `Fullname` VARCHAR(255) NOT NULL,
+            `CreatedAt` DateTime NOT NULL,
+            `IsEnabled` SMALLINT(1),
+            INDEX `idx_id` (`Id`),
+            INDEX `idx_username` (`Username`)
+        );
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `car` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`MakeId` INT NOT NULL,
+		`Model` VARCHAR(255) NOT NULL,
+		`Engine` VARCHAR(255),
+		`Mileage` INT,
+		`Year` DATE,
+		`ClientId` INT NOT NULL,
+		INDEX `idx_id` (`Id`),
+		INDEX `idx_makeId` (`MakeId`),
+		INDEX `idx_make_model` (`MakeId`, `Model`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `feedback` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`ShopId` INT NOT NULL,
+		`ClientId` INT NOT NULL,
+		`Message` Text,
+		`CreatedAt` DateTime NOT NULL,
+		INDEX `idx_shopId` (`ShopId`),
+		INDEX `idx_clientId` (`ClientId`),
+		INDEX `idx_shopId_clientId` (`ShopId`, `ClientId`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE `serviceshop` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`Username` varchar(255) NOT NULL,
+		`Password` varchar(255) NOT NULL,
+		`CompanyName` varchar(255) NOT NULL,
+		`Address` text,
+		`PhoneNumber` varchar(30) DEFAULT NULL,
+		`Email` varchar(255) DEFAULT NULL,
+		`Website` text,
+		`Description` text,
+		KEY `idx_id` (`Id`),
+		KEY `idx_companyName` (`CompanyName`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `serviceShopSpecialization` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`ShopId` INT NOT NULL,
+		`SpecializationId` INT NOT NULL,
+		INDEX `idx_shopId` (`ShopId`),
+		INDEX `idx_specializationId` (`SpecializationId`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `specializations` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`Name` INT NOT NULL,
+		INDEX `idx_name` (`Name`),
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `appointment` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`Date` DATETIME NOT NULL,
+		`ShopId` INT NOT NULL,
+		`CarId` INT NOT NULL,
+		`Details` Text,
+		INDEX `idx_date` (`Date`),
+		INDEX `idx_shopId` (`ShopId`),
+		INDEX `idx_carId` (`CarId`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE IF NOT EXISTS `order` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`AppointmentId` INT NOT NULL,
+		`Price` DOUBLE,
+		`Description` Text,
+		`Status` SMALLINT(2),
+		INDEX `idx_appointmentId` (`AppointmentId`),
+		INDEX `idx_status` (`Status`)
+		);
+	</migration>
+
+    <migration>
+		CREATE TABLE `make` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`Name` VARCHAR(255),
+		UNIQUE KEY `idx_name` (`Name`)
+		);
+	</migration>
+	
+</dbMigrations>
