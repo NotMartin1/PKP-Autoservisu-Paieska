@@ -42,26 +42,26 @@ const Sidebar = props => {
     setActiveTab(activeItem);
   }, []);
 
-return (
+  return (
     <div className="sidebar">
-        <div className="sidebar-container">
-            <div className="sidebar-header">Your Logo</div>
-            {sidebarItemGroups.map((group, groupIndex) => (
-                <div key={groupIndex}>
-                    <div className="sidebar-splitter"></div>
-                    {group.Items.map((item, itemIndex) => (
-                        <div className={`${item === activeTab ? 'sidebar-activeItem' : ''}`}>
-                            <div    
-                                className="sidebar-item"
-                                onClick={() => { history.push(item.Route); setActiveTab(item); }}>
-                                <p>{item.Label}</p>
-                            </div>
-                        </div>
-                    ))}
+      <div className="sidebar-container">
+        <div className="sidebar-header">Your Logo</div>
+        {sidebarItemGroups.map((group, groupIndex) => (
+          <div key={groupIndex}>
+            <div className="sidebar-splitter"></div>
+            {group.Items.map((item, itemIndex) => (
+              <div className={`${item === activeTab ? 'sidebar-activeItem' : ''}`}>
+                <div    
+                  className="sidebar-item"
+                  onClick={() => { history.push(item.Route); setActiveTab(item); }}>
+                  <p>{item.Label}</p>
                 </div>
+              </div>
             ))}
-        </div>
+          </div>
+        ))}
+      </div>
     </div>
-);
+  );
 };
 export default Sidebar;
