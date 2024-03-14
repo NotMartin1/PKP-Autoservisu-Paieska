@@ -3,10 +3,12 @@ using Model.Entities;
 using Model.Entities.Car;
 using Model.Entities.Car.Request;
 using Model.Services.Interfaces;
+using Server.Core.Middleware;
 
 namespace WebApi.Controllers
 {
     [ApiController]
+    [ServiceFilter(typeof(TokenValidationFilter))]
     [Route("api/v1/Car")]
     public class CarController : ControllerBase
     {
