@@ -1,9 +1,8 @@
-import React from 'react';
 import { Container } from 'reactstrap';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 import Sidebar from './Sidebar';
 import Header from './Header';
-
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Layout = props => {
 
@@ -19,7 +18,7 @@ const Layout = props => {
         {children}
       </Container>
     </>
-  )
+  );
 
-}
+};
 export default Layout;
