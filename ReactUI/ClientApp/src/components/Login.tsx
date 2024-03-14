@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import CenteredForm from '../wbf-components/src/CenteredForm';
-import FormInput from '../wbf-components/src/FormInput';
+//@ts-nocheck
+import { useState } from 'react';
 import { Alert, Col, Row } from 'reactstrap';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 import { Path } from './constants/StaticPaths';
+
 import helpersRequest from '../functions/helpersRequest';
-import Button from '../wbf-components/src/Button';
+import Button from '../shared-components/src/Button';
+import CenteredForm from '../shared-components/src/CenteredForm';
+import FormInput from '../shared-components/src/FormInput';
 
 const Login = props => {
 
@@ -16,8 +19,8 @@ const Login = props => {
   const history = useHistory();
 
   const changeRoute = () => {
-    history.push(Path.Users)
-  }
+    history.push(Path.Users);
+  };
 
   const processLogin = () => {
     helpersRequest.post('user/login', { Login: loginState.value, Password: passwordState.value })
@@ -29,20 +32,20 @@ const Login = props => {
           setPasswordState({ value: null, invalid: false });
         }
       })
-      .catch(error => setErrorMessage("Technical error occurred"));
-  }
+      .catch(error => setErrorMessage('Technical error occurred'));
+  };
 
   const onLogin = () => {
     if (!validateInput())
       return;
 
     processLogin();
-  }
+  };
 
   const validateInput = () => {
     setErrorMessage(null);
 
-    let missingFields = [];
+    const missingFields = [];
 
     if (!loginState.value) {
       missingFields.push('Login');
@@ -60,7 +63,7 @@ const Login = props => {
     }
 
     return true;
-  }
+  };
 
   return (
     <>
@@ -96,7 +99,7 @@ const Login = props => {
         </Row>5
       </CenteredForm >
     </>
-  )
+  );
 
-}
+};
 export default Login;
