@@ -1,4 +1,7 @@
-﻿using Model.Entities.CarService;
+﻿using Microsoft.Data.SqlClient.DataClassification;
+using Model.Entities.CarService;
+using Model.Entities.CarWorkshop;
+using Model.Entities.Filter;
 using Model.Exstensions;
 using Model.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
@@ -64,6 +67,52 @@ namespace Model.Repositories
             sql.AddParameter("?companyName", companyName);
 
             return _genericRepository.FetchSingleInt(sql) > 0;
+        }
+
+        public List<CarWorkshopDisplayBasicData> List(ListArgs args)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT sshp.CompanyName, sshp.Description, sc.Name AS Specialization FROM serviceShop sshp
+            INNER JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
+            INNER JOIN specializations sc ON sc.Id = sshpsc.SpecializationId");
+
+            var where = new List<string>();
+
+            var companyNameFilter = args.Filters.FirstOrDefault(x => string.Equals("CompanyName", x.ColumnName));
+            if (companyNameFilter != null)
+            {
+                where.Add($"sshp.CompanyName LIKE '%{companyNameFilter.Value}%'");
+            }
+
+            var specializationIdFilter = args.Filters.FirstOrDefault(x => string.Equals("SpecializationId", x.ColumnName));
+            if (specializationIdFilter != null)
+            {
+                where.Add("sc.Id = ?specializationId");
+                sql.AddParameter("?specializationId", specializationIdFilter.Value);
+            }
+
+            if (where.Count > 0)
+                sql.CommandText += $" WHERE {string.Join(" AND ", where)}";
+
+            var columns = new List<string>
+            {
+                "CompanyName",
+                "Description",
+                "Specialization"
+            };
+
+            if (columns.Contains(args.OrderColumnName) && args.OrderDirection.HasValue)
+            {
+                var direction = args.OrderDirection.Value == OrderDirection.DESC ? "DESC" : "ASC";
+                sql.CommandText += $" ORDER BY {args.OrderColumnName} {direction}";
+            }
+
+            if (args.Take != 0)
+            {
+                sql.CommandText += $" LIMIT {args.Skip.Value}, {args.Take.Value}";
+            }
+
+            return _genericRepository.FetchList<CarWorkshopDisplayBasicData>(sql);
         }
     }
 }

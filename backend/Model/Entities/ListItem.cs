@@ -1,6 +1,6 @@
-﻿namespace Model.Entities.Car
+﻿namespace Model.Entities
 {
-    public class CarMake
+    public class ListItem
     {
         public int Id { get; set; }
         public string? Name { get; set; }

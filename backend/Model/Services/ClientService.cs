@@ -104,6 +104,8 @@ namespace Model.Services
             }
         }
 
+        public bool CheckIfExsitsById(int id) => _clientRepository.CheckIfExsitsById(id);
+
         private ServiceResult ValidateCredentials(CredentialsValidationArgs args)
         {
             if (string.IsNullOrWhiteSpace(args.Username))

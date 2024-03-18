@@ -8,7 +8,6 @@ using Server.Core.Middleware;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [ServiceFilter(typeof(TokenValidationFilter))]
     [Route("api/v1/Car")]
     public class CarController : ControllerBase
     {
@@ -26,9 +25,17 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Make/Create")]
+        [ServiceFilter(typeof(TokenValidationFilter))]
         public ServiceResult Create([FromBody] CarMakeCreateRequest request)
         {
             return _carService.CreateMake(request);
+        }
+
+        [HttpPost("Add")]
+        [ServiceFilter(typeof(TokenValidationFilter))]
+        public ServiceResult AddCar([FromBody] CarAddRequest request)
+        {
+            return _carService.AddCar(request);
         }
     }
 }

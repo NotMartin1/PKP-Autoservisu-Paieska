@@ -2,6 +2,6 @@
 {
     public class ClientRegistrationData
     {
-        public string Fullname { get; set; }
+        public string? Fullname { get; set; }
     }
 }

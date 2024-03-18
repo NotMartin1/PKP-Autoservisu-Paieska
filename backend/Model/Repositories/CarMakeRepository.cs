@@ -47,5 +47,17 @@ namespace Model.Repositories
 
             return _genericRepository.FetchSingleInt(sql) > 0;
         }
+
+        public bool CheckIfExsitsById(int id)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT COUNT(*)
+            FROM {TABLE_NAME}
+            WHERE Id = ?id");
+
+            sql.AddParameter("?id", id);
+
+            return _genericRepository.FetchSingleInt(sql) > 0;
+        }
     }
 }
