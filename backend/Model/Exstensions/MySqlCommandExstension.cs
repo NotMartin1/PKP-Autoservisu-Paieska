@@ -23,10 +23,20 @@ namespace Model.Exstensions
 
             foreach (var match in matches)
             {
+
                 var property = properties.FirstOrDefault(p => string.Equals(match?.Replace("?", ""), p.Name, StringComparison.CurrentCultureIgnoreCase));
                 if (property != null)
-                    command.AddParameter(match, property.GetValue(obj));
-                
+                {
+                    var value = property.GetValue(obj);
+
+                    if (value is DateOnly dateOnlyValue)
+                    {
+                        value = dateOnlyValue.ToString("yyyy-MM-dd");
+                    }
+
+                    command.AddParameter(match, value);
+                }
+
             }
 
         }

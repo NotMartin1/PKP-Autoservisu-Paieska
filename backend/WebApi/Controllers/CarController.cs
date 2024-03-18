@@ -3,6 +3,7 @@ using Model.Entities;
 using Model.Entities.Car;
 using Model.Entities.Car.Request;
 using Model.Services.Interfaces;
+using Server.Core.Middleware;
 
 namespace WebApi.Controllers
 {
@@ -24,9 +25,17 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Make/Create")]
+        [ServiceFilter(typeof(TokenValidationFilter))]
         public ServiceResult Create([FromBody] CarMakeCreateRequest request)
         {
             return _carService.CreateMake(request);
+        }
+
+        [HttpPost("Add")]
+        [ServiceFilter(typeof(TokenValidationFilter))]
+        public ServiceResult AddCar([FromBody] CarAddRequest request)
+        {
+            return _carService.AddCar(request);
         }
     }
 }
