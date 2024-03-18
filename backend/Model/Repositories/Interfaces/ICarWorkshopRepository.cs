@@ -7,6 +7,7 @@ namespace Model.Repositories.Interfaces
     public interface ICarWorkshopRepository
     {
         bool CheckIfCompanyNameExsits(string companyName);
+        bool CheckIfExsistsById(int id);
         CarWorkshopBasicData GetBasicByUsername(string username);
         void Insert(CarWorkshopExtendedData args);
         List<CarWorkshopDisplayBasicData> List(ListArgs args);

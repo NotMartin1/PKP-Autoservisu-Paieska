@@ -9,6 +9,7 @@ namespace Model.Services.Interfaces
 {
     public interface ICarWorkshopService
     {
+        bool CheckIfExsistsById(int id);
         ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs args);
         ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);

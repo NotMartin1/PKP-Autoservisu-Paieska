@@ -3,6 +3,6 @@
     public class FilterArgs
     {
         public string? ColumnName { get; set; }
-        public string? Value { get; set; }
+        public object? Value { get; set; }
     }
 }
