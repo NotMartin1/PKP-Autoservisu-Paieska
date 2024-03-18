@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Filters;
-using Server.Core.Authorization;
 using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,5 +19,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExtendTokenExpirationMiddleware>();
 
 app.Run();

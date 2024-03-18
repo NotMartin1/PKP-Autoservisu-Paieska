@@ -1,4 +1,4 @@
-﻿using Server.Core.Authorization;
+﻿using Server.Core.Middleware;
 using SimpleInjector;
 
 namespace WebApi
@@ -17,15 +17,17 @@ namespace WebApi
                             });
 
             services.AddControllersWithViews();
+
+
             services.AddSimpleInjector(container, options =>
             {
                 options.AddAspNetCore()
-                .AddControllerActivation();
+                       .AddControllerActivation();
             });
 
-            services.AddScoped<BasicAuthorizationFilter>();
-
             Model.ObjectContainerInitializer.Init(container);
+
+            services.AddScoped<TokenValidationFilter>();
         }
     }
 }

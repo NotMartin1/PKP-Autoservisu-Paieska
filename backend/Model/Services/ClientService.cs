@@ -104,30 +104,21 @@ namespace Model.Services
             }
         }
 
+        public bool CheckIfExsitsById(int id) => _clientRepository.CheckIfExsitsById(id);
+
         private ServiceResult ValidateCredentials(CredentialsValidationArgs args)
         {
             if (string.IsNullOrWhiteSpace(args.Username))
-                return new()
-                {
-                    Success = false,
-                    Message = "Username not specified",
-                };
+                return new(false, "Username not specified");
 
             if (string.IsNullOrWhiteSpace(args.Password))
-                return new()
-                {
-                    Success = false,
-                    Message = "Password not specified",
-                };
+                return new(false, "Password not specified");
+
 
             if (args.Password.Length < 3)
-                return new()
-                {
-                    Success = false,
-                    Message = "Pasword length should be greather than or equal to 3",
-                };
+                return new(false, "Pasword length should be greather than or equal to 3");
 
-            return new() { Success = true };
+            return new(true);
         }
     }
 }

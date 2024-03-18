@@ -18,6 +18,9 @@ namespace Model
             container.Register<IGenericRepository, GenericRepository>();
             container.Register<IValidationService, ValidationService>();
             container.Register<ICarMakeRepository, CarMakeRepository>();
+            container.Register<ICarRepository, CarRepository>();
+            container.Register<ICarWorkshopFeedbackService, CarWorkshopFeedbackService>();
+            container.Register<ICarWokshopFeedackRepository, CarWorkshopFeedbackRepository>();
         }
     }
 }

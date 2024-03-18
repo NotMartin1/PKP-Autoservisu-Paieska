@@ -6,6 +6,7 @@ namespace Model.Services.Interfaces
 {
     public interface ICarService
     {
+        ServiceResult AddCar(CarAddRequest request);
         ServiceResult CreateMake(CarMakeCreateRequest request);
         ServiceResult<List<CarMake>> GetMakes();
     }

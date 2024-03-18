@@ -12,15 +12,15 @@ namespace Model.Services
         public ServiceResult ValidateCredentails(CredentialsValidationArgs args)
         {
             if (string.IsNullOrWhiteSpace(args.Username))
-                return new() { Success = false, Message = "Username is missing" };
+                return new(false, "Username is missing");
 
             if (string.IsNullOrWhiteSpace(args.Password))
-                return new() { Success = false, Message = "Password is missing" };
-             
-            if (args.Password.Length < MINIMAL_PASSWORD_LENGTH)
-                return new() { Success = false, Message = $"Password length should be greater than or equal {MINIMAL_PASSWORD_LENGTH}" };
+                return new(false, "Password is missing");
 
-            return new() { Success = true };
+            if (args.Password.Length < MINIMAL_PASSWORD_LENGTH)
+                return new(false, $"Password length should be greater than or equal {MINIMAL_PASSWORD_LENGTH}");
+
+            return new(true);
         }
 
         public bool ValidateEmail(string email)

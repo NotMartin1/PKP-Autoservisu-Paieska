@@ -39,7 +39,7 @@ namespace Model.Repositories
                 var columnName = reader.GetName(i);
                 var property = properties.FirstOrDefault(p => p.Name == columnName);
 
-                if (property != null && reader[columnName] != DBNull.Value)
+                 if (property != null && reader[columnName] != DBNull.Value)
                 {
                     var value = reader[columnName];
                     var targetType = property.PropertyType;
