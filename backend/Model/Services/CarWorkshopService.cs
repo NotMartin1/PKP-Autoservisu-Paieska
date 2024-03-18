@@ -94,5 +94,7 @@ namespace Model.Services
                 return new() { Success = false, Message = $"Failed to fetch car workshop list due to: {ex.Message}" };
             }
         }
+
+        public bool CheckIfExsistsById(int id) => _carServiceRepository.CheckIfExsistsById(id);
     }
 }

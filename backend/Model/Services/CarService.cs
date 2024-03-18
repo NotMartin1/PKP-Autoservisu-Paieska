@@ -37,15 +37,15 @@ namespace Model.Services
             try
             {
                 if (_carMakeRepository.CheckIfExsitsByName(request.Name))
-                    return new() { Success = false, Message = "Make with same name already exists" };
+                    return new(false, "Make with same name already exists");
 
                 _carMakeRepository.Insert(request.Name);
 
-                return new() { Success = true }; 
+                return new(true); 
             }
             catch (Exception ex)
             {
-                return new() { Success = false, Message = "Technical Error Occurred" };
+                return new(false, "Technical Error Occurred");
             }
         }
 
@@ -54,36 +54,36 @@ namespace Model.Services
             try
             {
                 if (!request.ClientId.HasValue)
-                    return new() { Success = false, Message = "ClientId is not specified" };
+                    return new(false, "ClientId is not specified");
 
                 if (!request.MakeId.HasValue)
-                    return new() { Success = false, Message = "MakeId is not specified" };
+                    return new(false, "MakeId is not specified");
 
                 if (string.IsNullOrWhiteSpace(request.Model))
-                    return new() { Success = false, Message = "Model is not specified" };
+                    return new(false, "Model is not specified");
 
                 if (string.IsNullOrWhiteSpace(request.Engine))
-                    return new() { Success = false, Message = "Engine is not specified" };
+                    return new(false, "Engine is not specified");
 
                 if (!request.Mileage.HasValue)
-                    return new() { Success = false, Message = "Mileage is not specified" };
+                    return new(false, "Mileage is not specified");
 
                 if (!request.ProductionYear.HasValue)
-                    return new() { Success = false, Message = "Production year is not specified" };
+                    return new(false, "Production year is not specified");
 
                 if (!_clientService.CheckIfExsitsById(request.ClientId.Value))
-                    return new() { Success = false, Message = $"Cannot find client by Id: {request.ClientId}" };
+                    return new(false, $"Cannot find client by Id: {request.ClientId}");
 
                 if (!_carMakeRepository.CheckIfExsitsById(request.MakeId.Value))
-                    return new() { Success = false, Message = $"Cannot find make by Id: {request.MakeId}" };
+                    return new(false, $"Cannot find make by Id: {request.MakeId}");
 
                 _carRepository.Insert(request);
 
-                return new() { Success = true };
+                return new(true);
             }
             catch (Exception ex)
             {
-                return new() { Success = false, Message = "Technical Error Occurred" };
+                return new(false, "Technical Error Occurred");
             }
         }
     }

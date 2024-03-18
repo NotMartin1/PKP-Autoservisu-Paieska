@@ -69,12 +69,30 @@ namespace Model.Repositories
             return _genericRepository.FetchSingleInt(sql) > 0;
         }
 
+        public bool CheckIfExsistsById(int id)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT COUNT(*)
+            FROM {TABLE_NAME}
+            WHERE Id = ?id");
+
+            sql.AddParameter("?id", id);
+
+            return _genericRepository.FetchSingleInt(sql) > 0;
+        }
+
         public List<CarWorkshopDisplayBasicData> List(ListArgs args)
         {
             var sql = new MySqlCommand($@"
-            SELECT sshp.CompanyName, sshp.Description, sc.Name AS Specialization FROM serviceShop sshp
+            SELECT 
+                sshp.CompanyName,
+                sshp.Description,
+                sc.Name AS Specialization,
+                AVG(f.Rating) AS AverageRating
+            FROM serviceShop sshp
             INNER JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
-            INNER JOIN specializations sc ON sc.Id = sshpsc.SpecializationId");
+            INNER JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
+            LEFT JOIN feedback f ON sshp.Id = f.ShopId");
 
             var where = new List<string>();
 
@@ -91,14 +109,25 @@ namespace Model.Repositories
                 sql.AddParameter("?specializationId", specializationIdFilter.Value);
             }
 
+
             if (where.Count > 0)
                 sql.CommandText += $" WHERE {string.Join(" AND ", where)}";
+
+            sql.CommandText += " GROUP BY sshp.CompanyName, sshp.Description, sc.Name";
+
+            var ratingFilter = args.Filters.FirstOrDefault(x => string.Equals("Raiting", x.ColumnName));
+            if (ratingFilter != null)
+            {
+                sql.CommandText += " HAVING AVG(f.Rating) >= ?raiting";
+                sql.AddParameter("?raiting", ratingFilter.Value);
+            }
 
             var columns = new List<string>
             {
                 "CompanyName",
                 "Description",
-                "Specialization"
+                "Specialization",
+                "AverageRating"
             };
 
             if (columns.Contains(args.OrderColumnName) && args.OrderDirection.HasValue)
