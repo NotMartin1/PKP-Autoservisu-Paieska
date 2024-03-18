@@ -1,11 +1,9 @@
 @import './variables';
 
 .navigation-header {
-    height: 68px;
-    width: 80vw;
-    margin-top: 20px;
+    height: $header-height;
+    width: 100%;
     background-color: $main-color;
-    border-radius: 0 20px 0 20px;
 }
 
 .navigation-header-content {
