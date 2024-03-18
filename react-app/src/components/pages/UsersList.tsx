@@ -1,14 +1,16 @@
 //@ts-nocheck
 import { useEffect, useState } from 'react';
 
-import helpersRequest from '../functions/helpersRequest';
+import { ApiService } from 'services/ApiService';
 
 const UsersList = props => {
 
   const [users, setUsers] = useState([]);
 
+  const apiService = ApiService();
+
   useEffect(() => {
-    helpersRequest.get('user/list')
+    apiService.get('user/list')
       .then(data => {
         setUsers(data);
       })
