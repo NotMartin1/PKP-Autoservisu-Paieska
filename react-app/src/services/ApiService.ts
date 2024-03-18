@@ -2,12 +2,13 @@ import { useDispatch } from 'react-redux';
 import { setLogout } from 'store/slices/authSlice';
 
 export const ApiService = () => {
-  const baseUrl = 'https://localhost:44360';
+  const baseUrl = 'https://localhost:7011';
 
   const dispatch = useDispatch();
 
   const checkResponseStatus = (response: Response) => {
     if(response.status === 401) {
+      console.log('Unauthorized');
       dispatch(setLogout());
     }
   };
@@ -20,7 +21,7 @@ export const ApiService = () => {
   };
 
   const post = async (endpoint: string, data: unknown) => {
-    console.log('data: ', data);
+    console.log('POST data: ', data);
 
     const response = await fetch(`${baseUrl}/${endpoint}`, {
       method: 'POST',
