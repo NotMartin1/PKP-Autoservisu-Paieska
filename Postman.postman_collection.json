@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "17db585b-e497-427f-a883-d77e5700dd73",
+		"name": "Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24526464"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Authorization",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Username\": \"test1\",\r\n  \"Password\": \"test1\",\r\n  \"AdditionalData\": {\r\n    \"Fullname\": \"Testing Account\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/Client/Authorization/Register",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"Client",
+										"Authorization",
+										"Register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Username\": \"test1\",\r\n  \"Password\": \"test1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/Client/Authorization/Login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"Client",
+										"Authorization",
+										"Login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Car",
+					"item": [
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"MakeId\": 5,\r\n  \"Model\": \"string\",\r\n  \"Engine\": \"string\",\r\n  \"Mileage\": 0,\r\n  \"ProductionYear\": \"2024-03-18\",\r\n  \"ClientId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/Car/Add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"Car",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CarWorkshop",
+			"item": [
+				{
+					"name": "Authorization",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"string\",\r\n    \"Password\": \"string\",\r\n    \"AdditionalData\": {\r\n        \"CompanyName\": \"string\",\r\n        \"Address\": \"string\",\r\n        \"PhoneNumber\": \"+37067768779\",\r\n        \"Email\": \"test@gmail.com\",\r\n        \"Website\": \"string\",\r\n        \"Description\": \"string\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/CarWorkshop/Authorization/Register",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"CarWorkshop",
+										"Authorization",
+										"Register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Username\": \"string\",\r\n  \"Password\": \"string\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/CarWorkshop/Authorization/Login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"CarWorkshop",
+										"Authorization",
+										"Login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Feedback",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ShopId\": 3,\r\n  \"ClientId\": 2,\r\n  \"Message\": \"Buvo bedu su ausinimu niekas negalejo rasti galu kodel nedirba ventiliatoriai. Bet nuvarius auto i Simika chebrai pavyko rasti priezasti ir ja pasalinti. Siai dienai tai geriausias servisas is visur kur teko lankytis. Ačiū\",\r\n  \"Rating\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/Feedback/Create",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"Feedback",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/Feedback/List?shopId=3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"Feedback",
+										"List"
+									],
+									"query": [
+										{
+											"key": "shopId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"OrderColumnName\": \"CompanyName\",\r\n  \"OrderDirection\": 0,\r\n  \"Skip\": 0,\r\n  \"Take\": 0,\r\n  \"Filters\": [\r\n    {\r\n      \"ColumnName\": \"CompanyName\",\r\n      \"Value\": \"Melga\"\r\n    },\r\n    {\r\n        \"ColumnName\": \"Raiting\",\r\n        \"Value\": 3.00\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/CarWorkshop/List",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"CarWorkshop",
+								"List"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CarMakes",
+			"item": [
+				{
+					"name": "GetMakes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/Car/Make/GetMakes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Car",
+								"Make",
+								"GetMakes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Subaru\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/Car/Make/Create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Car",
+								"Make",
+								"Create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
