@@ -4,6 +4,7 @@ interface FormInput {
     label?: string,
     isMandatory?: boolean,
     onChange?: (event: any) => void,
+    onBlur?: (event: any) => void,
     isPassword?: boolean,
     additionalClassname?: string,
     value?: string | null,
@@ -59,23 +60,24 @@ const FormInput: React.FC<FormInput> = (props) => {
   };
 
   return (
-    <Row className={`form-input align-items-center ${additionalClassname}`}>
+    <div className={`form-input ${additionalClassname}`}>
       { !removeLabel &&
-                <Col sm={4} className='mt-auto'>
-                  <Label>{label ? `${isMandatory ? '*' : ''}${label}` : ''}</Label>
-                </Col>
+        <Row>
+          <Label>{label ? `${isMandatory ? '*' : ''}${label}` : ''}</Label>
+        </Row>
       }
-      <Col sm={8}>
+      <div>
         <Input
           type={inputType}
           onChange={handleInputChange}
+          onBlur={props.onBlur}
           value={value || ''}
           placeholder={placeholder}
           className={isInvalid ? 'is-invalid' : ''}
         >
         </Input>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 

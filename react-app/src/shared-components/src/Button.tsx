@@ -1,5 +1,5 @@
 interface ButtonProps {
-    label: string
+    label: string | JSX.Element
     additionalClasses?: string
     secondary?: boolean
     disabled?: boolean
@@ -17,6 +17,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   } = props;
 
   return (
+    //not accessible
     <div className={`btn ${disabled ? 'btn-disabled' : secondary ? 'btn-secondary' : 'btn-primary'}` + (additionalClasses ?? '')} onClick={() => onClick && !disabled ? onClick() : null}>
       {label}
     </div>

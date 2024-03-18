@@ -1,17 +1,32 @@
 @import './variables';
 @import './fonts';
 
+.divider {
+  border: 2px solid $action-color;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+  }
+
 .centered-form-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+
+    min-height: calc(100vh - #{$header-height});
   }
   
   .centered-form {
-    min-width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 40%;
+    min-height: 50%;
+
     padding: 20px;
-    min-height: 40vh;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: $main-color;
@@ -28,15 +43,13 @@
   }
   
   .centered-form label {
-    display: block;
-    margin-bottom: 10px;
+    max-width: 300px;
+    margin-bottom: -18px;
   }
   
   .centered-form input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-    box-sizing: border-box;
+    width: 400px;
+    padding: 10px;
   }
   
   .centered-form .button {
@@ -56,25 +69,23 @@
 
   .form-input label {
     color: $text-color;
-    font-size: 25px;
+    font-size: 16px;
   }
 
   .form-input input {
-    border: none;
-    background-color: $main-color;
+    background-color: $white;
     border: 2px solid $action-color;
     border-radius: 0px;
     color: $text-color;
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 16px;
     &.is-invalid {
       border: 2px solid $color-danger;
     }
   }
 
   .form-input *:focus {
-    border: none;
-    background-color: $main-color;
+    background-color: $white;
     border: 2px solid $action-color;
     border-radius: 0px;
     outline: none !important;
@@ -96,6 +107,7 @@
   }
 
   .btn-disabled {
-    background-color: $action-color-secondary;
+    background-color: $action-color-secondary !important;
+    color: $text-color-secondary !important;
     cursor: default !important;
   }
