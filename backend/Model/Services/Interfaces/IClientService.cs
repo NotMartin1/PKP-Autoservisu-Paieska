@@ -8,6 +8,7 @@ namespace Model.Services.Interfaces
     public interface IClientService
     {
         bool CheckIfExsitsById(int id);
+        string GetPasswordByUsername(string username);
         ServiceResult<LoginResponse<ClientBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<ClientRegistrationData> request);
     }
