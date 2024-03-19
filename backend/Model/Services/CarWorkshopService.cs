@@ -13,24 +13,39 @@ namespace Model.Services
     public class CarWorkshopService : ICarWorkshopService
     {
         private readonly IValidationService _validationService;
+        private readonly IPasswordHasher _passwordHasher;
         private readonly ICarWorkshopRepository _carServiceRepository;
 
-        public CarWorkshopService(IValidationService validationService, ICarWorkshopRepository carServiceRepository)
+        public CarWorkshopService(IValidationService validationService, ICarWorkshopRepository carServiceRepository, IPasswordHasher passwordHasher)
         {
             _validationService = validationService;
             _carServiceRepository = carServiceRepository;
+            _passwordHasher = passwordHasher;
         }
-
+        
         public ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request)
         {
             try
-            {
-                var validationResult = _validationService.ValidateCredentails(new() { Username = request.Username, Password = request.Password });
-                if (!validationResult.Success)
-                    return new() { Success = false, Message = validationResult.Message, Data = new(LoginResultCode.InvalidCredentials) };
+            {               
+                
+                if (!_carServiceRepository.CheckIfExsitsByUsername(request.Username))
+                    return new() { Success = false,
+                     Message = "User does not exsits",
+                      Data = new(LoginResultCode.InvalidCredentials) };
 
-                if (!_carServiceRepository.ValidateCredentials(request.Username, request.Password))
-                    return new() { Success = false, Message = "Invalid credentials", Data = new(LoginResultCode.InvalidCredentials) };
+                var isPasswordValid = _passwordHasher.VerifyPassword(request.Password, _carServiceRepository.GetPasswordByUsername(request.Username));
+
+                if (!isPasswordValid)
+                    return new() { Success = false, 
+                    Message = "Invalid Password", 
+                    Data = new(LoginResultCode.InvalidCredentials) };
+
+
+
+                var validationResult = _validationService.ValidateCredentails(new() { 
+                    Username = request.Username,
+                     Password = _carServiceRepository.GetPasswordByUsername(request.Username) });
+
 
                 var carServiceData = _carServiceRepository.GetBasicByUsername(request.Username);
 
@@ -45,7 +60,9 @@ namespace Model.Services
         public ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request)
         {
             try
-            {
+            {   
+                var passwordHash = _passwordHasher.HashPassword(request.Password);
+
                 var validationResult = _validationService.ValidateCredentails(new() { Username = request.Username, Password = request.Password });
                 if (!validationResult.Success)
                     return new() { Success = false, Message = validationResult.Message, Data = new(RegistrationResultCode.ValidationFailed) };
@@ -65,7 +82,7 @@ namespace Model.Services
                 _carServiceRepository.Insert(new()
                 {
                     Username = request.Username,
-                    Password = request.Password,
+                    Password = passwordHash,
                     Address = request.AdditionalData.Address,
                     CompanyName = request.AdditionalData.CompanyName,
                     Email = request.AdditionalData.Email,
@@ -96,5 +113,10 @@ namespace Model.Services
         }
 
         public bool CheckIfExsistsById(int id) => _carServiceRepository.CheckIfExsistsById(id);
+
+        public string GetPasswordByUsername(string username)
+        {
+            return _carServiceRepository.GetPasswordByUsername(username);
+        }
     }
 }

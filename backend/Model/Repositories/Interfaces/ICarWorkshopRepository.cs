@@ -9,6 +9,8 @@ namespace Model.Repositories.Interfaces
         bool CheckIfCompanyNameExsits(string companyName);
         bool CheckIfExsistsById(int id);
         CarWorkshopBasicData GetBasicByUsername(string username);
+        string GetPasswordByUsername(string username);
+        bool CheckIfExsitsByUsername(string username);
         void Insert(CarWorkshopExtendedData args);
         List<CarWorkshopDisplayBasicData> List(ListArgs args);
         bool ValidateCredentials(string username, string password);

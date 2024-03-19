@@ -81,6 +81,30 @@ namespace Model.Repositories
             return _genericRepository.FetchSingleInt(sql) > 0;
         }
 
+          public string GetPasswordByUsername(string username)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Password
+            FROM {TABLE_NAME}
+            WHERE Username = ?username");
+
+            sql.AddParameter("?username", username);
+
+             var result = _genericRepository.FetchSingleString(sql);
+
+            return result ?? string.Empty;
+            }
+            public bool CheckIfExsitsByUsername(string username){
+                var sql = new MySqlCommand($@"
+                SELECT COUNT(*)
+                FROM {TABLE_NAME}
+                WHERE Username = ?username");
+
+                sql.AddParameter("?username", username);
+
+                return _genericRepository.FetchSingleInt(sql) > 0;
+                }
+
         public List<CarWorkshopDisplayBasicData> List(ListArgs args)
         {
             var sql = new MySqlCommand($@"
@@ -144,4 +168,5 @@ namespace Model.Repositories
             return _genericRepository.FetchList<CarWorkshopDisplayBasicData>(sql);
         }
     }
+
 }

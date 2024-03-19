@@ -10,6 +10,7 @@ namespace Model.Services.Interfaces
     public interface ICarWorkshopService
     {
         bool CheckIfExsistsById(int id);
+        string GetPasswordByUsername(string username);
         ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs args);
         ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);
