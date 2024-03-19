@@ -24,33 +24,38 @@ namespace Model.Services
         {
             try
             {   
+                    
+                if (!_clientRepository.CheckIfExsitsByUsername(request.Username))
+                    return new()
+                    {
+                        Success = false,
+                        Message = "User does not exsits",
+                        Data = new(LoginResultCode.InvalidCredentials)
+                    };
+
+
+
                 var isPasswordValid = _passwordHasher.VerifyPassword(request.Password, _clientRepository.GetPasswordByUsername(request.Username));
 
-                var credentialsValidationResult = ValidateCredentials(new()
-                {
-                    Username = request.Username,
-                    Password = request.Password,
-                });
+                
+                
 
                 if (!isPasswordValid)
                 {
                     return new()
                     {
                         Success = false,
-                        Message = credentialsValidationResult.Message,
+                        Message = "Invalid Password",
                         Data = new(LoginResultCode.InvalidCredentials)
                     };
                 }
 
-                if (!_clientRepository.CheckIfExsitsByUsername(request.Username))
-                    return new()
-                    {
-                        Success = false,
-                        Message = "Invalid credentials",
-                        Data = new(LoginResultCode.InvalidCredentials)
-                    };
 
-                
+                var credentialsValidationResult = ValidateCredentials(new()
+                {
+                    Username = request.Username,
+                    Password = _clientRepository.GetPasswordByUsername(request.Username),
+                });
                     
 
                 var clientData = _clientRepository.GetBasicByUsername(request.Username);
@@ -131,6 +136,11 @@ namespace Model.Services
                 return new(false, "Pasword length should be greather than or equal to 3");
 
             return new(true);
+        }
+
+        public string GetPasswordByUsername(string username)
+        {
+            return _clientRepository.GetPasswordByUsername(username);
         }
     }
 }

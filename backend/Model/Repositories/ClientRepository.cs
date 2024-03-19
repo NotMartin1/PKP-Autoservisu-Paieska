@@ -86,9 +86,9 @@ namespace Model.Repositories
 
             sql.AddParameter("?username", username);
 
-            var result = _genericRepository.FetchSingle<object>(sql);
+          var result = _genericRepository.FetchSingleString(sql);
 
-            return result.ToString() ?? string.Empty;
+            return result ?? string.Empty;
         }
     }
 }

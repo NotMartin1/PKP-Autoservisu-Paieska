@@ -3,12 +3,13 @@ using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
 using Model.Entities.Client;
 
-namespace Model.Services
+namespace Model.Services.Interfaces
 {
     public interface IClientService
     {
-        ServiceResult<RegistrationResponse> Register(RegistrationRequest<ClientRegistrationData> request);
+        bool CheckIfExsitsById(int id);
+        string GetPasswordByUsername(string username);
         ServiceResult<LoginResponse<ClientBasicData>> Login(LoginRequest request);
-        bool CheckIfExsitsById(int value);
+        ServiceResult<RegistrationResponse> Register(RegistrationRequest<ClientRegistrationData> request);
     }
 }
