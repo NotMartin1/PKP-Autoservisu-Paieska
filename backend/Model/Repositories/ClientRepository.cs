@@ -8,13 +8,13 @@ namespace Model.Repositories
     public class ClientRepository : IClientRepository
     {
         private readonly IGenericRepository _genericRepository;
-
         private const string TABLE_NAME = "client";
 
-        public ClientRepository(IGenericRepository genericRepository)
-        {
-            _genericRepository = genericRepository;
-        }
+           public ClientRepository(IGenericRepository genericRepository)  
+    {
+        _genericRepository = genericRepository;
+       
+    }
 
         public void Insert(ClientExtendedData client)
         {
@@ -77,6 +77,19 @@ namespace Model.Repositories
             sql.AddParameter("?password", password);
 
             return _genericRepository.FetchSingleInt(sql) > 0;
+        }
+
+        public string GetPasswordByUsername(string? username)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Password FROM {TABLE_NAME}
+            WHERE Username = ?username");
+
+            sql.AddParameter("?username", username);
+
+            var result = _genericRepository.FetchSingle<object>(sql);
+
+            return result.ToString() ?? string.Empty;
         }
     }
 }

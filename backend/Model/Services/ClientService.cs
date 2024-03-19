@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using System.Drawing.Printing;
+using Model.Entities;
 using Model.Entities.Authorization;
 using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
@@ -11,37 +12,46 @@ namespace Model.Services
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public ClientService(IClientRepository clientRepository)
+        public ClientService(IClientRepository clientRepository,IPasswordHasher passwordHasher)
         {
             _clientRepository = clientRepository;
+            _passwordHasher = passwordHasher;
         }
 
         public ServiceResult<LoginResponse<ClientBasicData>> Login(LoginRequest request)
         {
             try
-            {
+            {   
+                var isPasswordValid = _passwordHasher.VerifyPassword(request.Password, _clientRepository.GetPasswordByUsername(request.Username));
+
                 var credentialsValidationResult = ValidateCredentials(new()
                 {
                     Username = request.Username,
                     Password = request.Password,
                 });
 
-                if (!credentialsValidationResult.Success)
+                if (!isPasswordValid)
+                {
                     return new()
                     {
                         Success = false,
                         Message = credentialsValidationResult.Message,
                         Data = new(LoginResultCode.InvalidCredentials)
                     };
+                }
 
-                if (!_clientRepository.ValidateCredentials(request.Username, request.Password))
+                if (!_clientRepository.CheckIfExsitsByUsername(request.Username))
                     return new()
                     {
                         Success = false,
                         Message = "Invalid credentials",
                         Data = new(LoginResultCode.InvalidCredentials)
                     };
+
+                
+                    
 
                 var clientData = _clientRepository.GetBasicByUsername(request.Username);
 
@@ -65,6 +75,8 @@ namespace Model.Services
         {
             try
             {
+                var passwordHash = _passwordHasher.HashPassword(request.Password);
+
                 var credentialsValidationResult = ValidateCredentials(new()
                 {
                     Username = request.Username,
@@ -90,7 +102,7 @@ namespace Model.Services
                 _clientRepository.Insert(new()
                 {
                     Username = request.Username,
-                    Password = request.Password,
+                    Password = passwordHash,
                     Fullname = request.AdditionalData.Fullname,
                     IsEnabled = true,
                 });

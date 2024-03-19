@@ -6,6 +6,7 @@ namespace Model.Repositories.Interfaces
     {
         void Insert(ClientExtendedData client);
         ClientBasicData GetBasicByUsername(string username);
+        string GetPasswordByUsername(string username);
         bool CheckIfExsitsByUsername(string username);
         bool ValidateCredentials(string username, string password);
         bool CheckIfExsitsById(int id);

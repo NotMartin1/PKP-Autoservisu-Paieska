@@ -1,9 +1,12 @@
+
 using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.ConfigureServices();
 
 var app = builder.Build();

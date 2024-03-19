@@ -1,4 +1,6 @@
-﻿using Server.Core.Middleware;
+﻿using Model.Services;
+using Model.Services.Interfaces;
+using Server.Core.Middleware;
 using SimpleInjector;
 
 namespace WebApi
@@ -17,7 +19,7 @@ namespace WebApi
                             });
 
             services.AddControllersWithViews();
-
+services.AddScoped<IPasswordHasher, PasswordHasher>();
 
             services.AddSimpleInjector(container, options =>
             {
