@@ -5,11 +5,13 @@ using Model.Entities.CarService;
 using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 
-namespace Model.Services
+namespace Model.Services.Interfaces
 {
     public interface ICarWorkshopService
     {
-        ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs request);
+        bool CheckIfExsistsById(int id);
+        string GetPasswordByUsername(string username);
+        ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs args);
         ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);
     }

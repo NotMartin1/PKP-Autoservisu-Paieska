@@ -1,7 +1,9 @@
-﻿using Model.Entities.CarService;
+﻿using Microsoft.Data.SqlClient.DataClassification;
+using Model.Entities.CarService;
 using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 using Model.Exstensions;
+using Model.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
 
 namespace Model.Repositories
@@ -29,19 +31,7 @@ namespace Model.Repositories
 
             _genericRepository.ExecuteNonQuery(sql);
         }
-
-        public bool CheckIfCompanyNameExsits(string companyName)
-        {
-            var sql = new MySqlCommand($@"
-            SELECT COUNT(*)
-            FROM {TABLE_NAME}
-            WHERE CompanyName = ?companyName");
-
-            sql.AddParameter("?companyName", companyName);
-
-            return _genericRepository.FetchSingleInt(sql) > 0;
-        }
-
+        
         public CarWorkshopBasicData GetBasicByUsername(string username)
         {
             var sql = new MySqlCommand($@"
@@ -67,6 +57,54 @@ namespace Model.Repositories
             return _genericRepository.FetchSingleInt(sql) > 0;
         }
 
+        public bool CheckIfCompanyNameExsits(string companyName)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT COUNT(*)
+            FROM {TABLE_NAME}
+            WHERE CompanyName = ?companyName");
+
+            sql.AddParameter("?companyName", companyName);
+
+            return _genericRepository.FetchSingleInt(sql) > 0;
+        }
+
+        public bool CheckIfExsistsById(int id)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT COUNT(*)
+            FROM {TABLE_NAME}
+            WHERE Id = ?id");
+
+            sql.AddParameter("?id", id);
+
+            return _genericRepository.FetchSingleInt(sql) > 0;
+        }
+
+          public string GetPasswordByUsername(string username)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Password
+            FROM {TABLE_NAME}
+            WHERE Username = ?username");
+
+            sql.AddParameter("?username", username);
+
+             var result = _genericRepository.FetchSingleString(sql);
+
+            return result ?? string.Empty;
+            }
+            public bool CheckIfExsitsByUsername(string username){
+                var sql = new MySqlCommand($@"
+                SELECT COUNT(*)
+                FROM {TABLE_NAME}
+                WHERE Username = ?username");
+
+                sql.AddParameter("?username", username);
+
+                return _genericRepository.FetchSingleInt(sql) > 0;
+                }
+
         public List<CarWorkshopDisplayBasicData> List(ListArgs args)
         {
             var sql = new MySqlCommand($@"
@@ -76,8 +114,8 @@ namespace Model.Repositories
                 sc.Name AS Specialization,
                 AVG(f.Rating) AS AverageRating
             FROM serviceShop sshp
-            LEFT JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
-            LEFT JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
+            INNER JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
+            INNER JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
             LEFT JOIN feedback f ON sshp.Id = f.ShopId");
 
             var where = new List<string>();
@@ -130,4 +168,5 @@ namespace Model.Repositories
             return _genericRepository.FetchList<CarWorkshopDisplayBasicData>(sql);
         }
     }
+
 }

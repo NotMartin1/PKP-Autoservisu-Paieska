@@ -8,6 +8,8 @@ namespace Model.Repositories
     {
         bool CheckIfCompanyNameExsits(string companyName);
         CarWorkshopBasicData GetBasicByUsername(string username);
+        string GetPasswordByUsername(string username);
+        bool CheckIfExsitsByUsername(string username);
         void Insert(CarWorkshopExtendedData args);
         List<CarWorkshopDisplayBasicData> List(ListArgs args);
         bool ValidateCredentials(string username, string password);
