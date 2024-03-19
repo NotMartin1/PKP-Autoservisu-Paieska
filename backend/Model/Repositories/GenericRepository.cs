@@ -84,6 +84,17 @@ namespace Model.Repositories
                 return Convert.ToInt32(result);
             }
         }
+        public string FetchSingleString(MySqlCommand command)
+        {
+            using (var connection = GetSqlConnection())
+            {
+                connection.Open();
+                command.Connection = connection;
+
+                var result = command.ExecuteScalar();
+                return Convert.ToString(result);
+            }
+        }
 
         public List<T> FetchList<T>(MySqlCommand command) where T : class, new()
         {
