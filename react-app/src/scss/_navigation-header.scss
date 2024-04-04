@@ -1,0 +1,12 @@
+@import './variables';
+
+.navigation-header {
+    height: $header-height;
+    width: 100%;
+    background-color: $main-color;
+}
+
+.navigation-header-content {
+    width: 100%;
+    height: 100%;
+}
