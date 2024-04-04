@@ -1,0 +1,113 @@
+@import './variables';
+@import './fonts';
+
+.divider {
+  border: 2px solid $action-color;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+  }
+
+.centered-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: calc(100vh - #{$header-height});
+  }
+  
+  .centered-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 40%;
+    min-height: 50%;
+
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: $main-color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
+    .centered-form-content {
+      margin: 20px;
+      font-size: 16px;
+    }
+  }
+  
+  .centered-form h2 {
+    text-align: center;
+  }
+  
+  .centered-form label {
+    max-width: 300px;
+    margin-bottom: -18px;
+  }
+  
+  .centered-form input {
+    width: 400px;
+    padding: 10px;
+  }
+  
+  .centered-form .button {
+    width: 100%;
+    padding: 10px;
+    background-color: $action-color;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .centered-form .button:hover {
+    background-color: $action-color-active;
+  }
+
+  .form-input label {
+    color: $text-color;
+    font-size: 16px;
+  }
+
+  .form-input input {
+    background-color: $white;
+    border: 2px solid $action-color;
+    border-radius: 0px;
+    color: $text-color;
+    margin-top: 20px;
+    font-size: 16px;
+    &.is-invalid {
+      border: 2px solid $color-danger;
+    }
+  }
+
+  .form-input *:focus {
+    background-color: $white;
+    border: 2px solid $action-color;
+    border-radius: 0px;
+    outline: none !important;
+    box-shadow: none;
+    color: $text-color
+  }
+
+  .btn {
+    min-width: 50px;
+    font-size: 19px;
+  }
+
+  .btn-primary {
+    background-color: $action-color !important;
+    border-color: $action-color !important;
+    &:hover {
+      background-color: $action-color-active !important;
+    }
+  }
+
+  .btn-disabled {
+    background-color: $action-color-secondary !important;
+    color: $text-color-secondary !important;
+    cursor: default !important;
+  }
