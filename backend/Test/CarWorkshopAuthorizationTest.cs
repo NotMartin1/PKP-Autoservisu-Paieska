@@ -4,6 +4,7 @@ using Model.Entities.Authorization;
 using Model.Entities.CarService;
 using Model.Services;
 using Model.Entities.Constants;
+using Model.Repositories;
 
 namespace Test
 {
@@ -18,10 +19,14 @@ namespace Test
         private readonly string password = "test-123";
 
         private readonly ICarWorkshopService _carWorkshopService;
+        private readonly ICarWorkshopRepository _carWorkshopRepository;
 
         public CarWorkshopAuthorizationTest()
         {
-            _carWorkshopService = ConfigurationMock.GetContainer().GetInstance<ICarWorkshopService>();
+            var container = ConfigurationMock.GetContainer();
+
+            _carWorkshopService = container.GetInstance<ICarWorkshopService>();
+            _carWorkshopRepository = container.GetInstance<ICarWorkshopRepository>();
         }
 
         [TestMethod]
@@ -143,6 +148,23 @@ namespace Test
             var loginResult = _carWorkshopService.Login(loginArgs);
 
             Assert.AreEqual(loginResult.Data?.ResultCode, LoginResultCode.InvalidCredentials);
+        }
+
+        [TestMethod]
+        public void LoginSuccessful()
+        {
+            var username = $"test-{Guid.NewGuid()}";
+            var password = Guid.NewGuid().ToString();
+
+            _carWorkshopRepository.Insert(new() { Username = username, Password = password, CompanyName = Guid.NewGuid().ToString() });
+
+            var loginResult = _carWorkshopService.Login(new()
+            {
+                Username = username,
+                Password = password,
+            });
+
+            Assert.AreEqual(loginResult.Data?.ResultCode, LoginResultCode.Authorized);
         }
     }
 }
