@@ -102,5 +102,24 @@ namespace Test
             var registrationResult = _carWorkshopService.Register(registrationArgs);
             Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.InvalidEmail);
         }
+
+        [TestMethod]
+        public void RegistrationSuccessful()
+        {
+            var registrationArgs = new RegistrationRequest<CarWorkshopRegistrationArgs>()
+            {
+                Username = CarWorkshopAuthorizationData.username,
+                Password = Guid.NewGuid().ToString(),
+                AdditionalData = new()
+                {
+                    CompanyName = $"{CarWorkshopAuthorizationData.username}-company",
+                    PhoneNumber = PhoneNumberGenerator.GenerateLithuanianPhoneNumber(),
+                    Email = $"{CarWorkshopAuthorizationData.username}@test.com"
+                },
+            };
+
+            var registrationResult = _carWorkshopService.Register(registrationArgs);
+            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.Success);
+        }
     }
 }
