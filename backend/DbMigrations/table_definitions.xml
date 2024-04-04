@@ -1,0 +1,15 @@
+    <migration>
+		CREATE TABLE `serviceshop` (
+		`Id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`Username` varchar(255) NOT NULL,
+		`Password` varchar(255) NOT NULL,
+		`CompanyName` varchar(255) NOT NULL,
+		`Address` text,
+		`PhoneNumber` varchar(30) DEFAULT NULL,
+		`Email` varchar(255) DEFAULT NULL,
+		`Website` text,
+		`Description` text,
+		KEY `idx_id` (`Id`),
+		KEY `idx_companyName` (`CompanyName`)
+		);
+	</migration>
