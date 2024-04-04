@@ -121,5 +121,28 @@ namespace Test
             var registrationResult = _carWorkshopService.Register(registrationArgs);
             Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.Success);
         }
+
+        [TestMethod]
+        public void LoginMandatoryFieldsInvalid()
+        {
+            var loginArgs = new LoginRequest { Username = "", Password = "" };
+            var loginResult = _carWorkshopService.Login(loginArgs);
+
+            Assert.AreEqual(loginResult.Data?.ResultCode, LoginResultCode.InvalidCredentials);
+        }
+
+        [TestMethod]
+        public void LoginInvalidCredentials()
+        {
+            var loginArgs = new LoginRequest
+            {
+                Username = Guid.NewGuid().ToString(),
+                Password = Guid.NewGuid().ToString(),
+            };
+
+            var loginResult = _carWorkshopService.Login(loginArgs);
+
+            Assert.AreEqual(loginResult.Data?.ResultCode, LoginResultCode.InvalidCredentials);
+        }
     }
 }
