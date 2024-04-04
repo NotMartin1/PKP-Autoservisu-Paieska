@@ -10,16 +10,22 @@ namespace Model.Services
     public class CarWorkshopService : ICarWorkshopService
     {
         private readonly ICarWorkshopRepository _carServiceRepository;
+        private readonly IValidationService _validationService;
 
-        public CarWorkshopService(ICarWorkshopRepository carServiceRepository)
+        public CarWorkshopService(ICarWorkshopRepository carServiceRepository, IValidationService validationService)
         {
             _carServiceRepository = carServiceRepository;
+            _validationService = validationService;
         }
 
         public ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request)
         {
             try
             {
+                var validationResult = _validationService.ValidateCredentails(new() { Username = request.Username, Password = request.Password });
+                if (!validationResult.Success)
+                    return new() { Success = false, Message = validationResult.Message, Data = new(RegistrationResultCode.ValidationFailed) };
+
                 if (string.IsNullOrWhiteSpace(request.AdditionalData?.CompanyName))
                     return new() { Success = false, Message = "Company name is missing", Data = new(RegistrationResultCode.ValidationFailed) };
 

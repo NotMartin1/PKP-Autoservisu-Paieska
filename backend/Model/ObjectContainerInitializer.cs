@@ -11,6 +11,7 @@ namespace Model
             container.Register<ICarWorkshopService, CarWorkshopService>();
             container.Register<ICarWorkshopRepository, CarWorkshopRepository>();
             container.Register<IGenericRepository, GenericRepository>();
+            container.Register<IValidationService, ValidationService>();
         }
     }
 }
