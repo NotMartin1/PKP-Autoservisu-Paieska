@@ -20,7 +20,7 @@ namespace Model.Services
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(request.AdditionalData.CompanyName))
+                if (string.IsNullOrWhiteSpace(request.AdditionalData?.CompanyName))
                     return new() { Success = false, Message = "Company name is missing", Data = new(RegistrationResultCode.ValidationFailed) };
 
                 if (_carServiceRepository.CheckIfCompanyNameExsits(request.AdditionalData.CompanyName))
