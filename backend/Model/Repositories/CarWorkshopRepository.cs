@@ -39,5 +39,30 @@ namespace Model.Repositories
 
             return _genericRepository.FetchSingleInt(sql) > 0;
         }
+
+        public CarWorkshopBasicData GetBasicByUsername(string username)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Id, Username, CompanyName, Email
+            FROM {TABLE_NAME}
+            WHERE Username = ?username");
+
+            sql.AddParameter("?username", username);
+
+            return _genericRepository.FetchSingle<CarWorkshopBasicData>(sql);
+        }
+
+        public bool ValidateCredentials(string username, string password)
+        {
+            var sql = new MySqlCommand(@$"
+            SELECT COUNT(*)
+            FROM {TABLE_NAME}
+            WHERE Username = ?username AND Password = ?password");
+
+            sql.AddParameter("?username", username);
+            sql.AddParameter("?password", password);
+
+            return _genericRepository.FetchSingleInt(sql) > 0;
+        }
     }
 }

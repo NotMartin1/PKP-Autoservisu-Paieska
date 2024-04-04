@@ -19,9 +19,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Register")]
-        public ServiceResult<RegistrationResponse> Login([FromBody] RegistrationRequest<CarWorkshopRegistrationArgs> request)
+        public ServiceResult<RegistrationResponse> Register([FromBody] RegistrationRequest<CarWorkshopRegistrationArgs> request)
         {
             var result = _carWorkshopService.Register(request);
+            return result;
+        }
+
+        [HttpPost("Login")]
+        public ServiceResult<LoginResponse<CarWorkshopBasicData>> Login([FromBody] LoginRequest request)
+        {
+            var result = _carWorkshopService.Login(request);
             return result;
         }
     }

@@ -57,5 +57,26 @@ namespace Model.Services
                 return new() { Success = false, Message = $"Registration failed due to technical error: {ex.Message}" };
             }
         }
+
+        public ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request)
+        {
+            try
+            {
+                var validationResult = _validationService.ValidateCredentails(new() { Username = request.Username, Password = request.Password });
+                if (!validationResult.Success)
+                    return new() { Success = false, Message = validationResult.Message, Data = new(LoginResultCode.InvalidCredentials) };
+
+                if (!_carServiceRepository.ValidateCredentials(request.Username, request.Password))
+                    return new() { Success = false, Message = "Invalid credentials", Data = new(LoginResultCode.InvalidCredentials) };
+
+                var carServiceData = _carServiceRepository.GetBasicByUsername(request.Username);
+
+                return new() { Success = true, Data = new() { ResultCode = LoginResultCode.Authorized, UserData = carServiceData } };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = "Technical Error Occurred" };
+            }
+        }
     }
 }

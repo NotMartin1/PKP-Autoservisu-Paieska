@@ -6,5 +6,6 @@ namespace Model.Repositories
     {
         bool CheckIfCompanyNameExsits(string companyName);
         void Insert(CarWorkshopExtendedData args);
+        bool ValidateCredentials(string username, string password);
     }
 }
