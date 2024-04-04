@@ -35,6 +35,9 @@ namespace Model.Services
                 if (!string.IsNullOrWhiteSpace(request.AdditionalData.PhoneNumber) && !_validationService.ValidatePhoneNumber(request.AdditionalData.PhoneNumber))
                     return new() { Success = false, Message = "Phone number is invalid", Data = new(RegistrationResultCode.InvalidPhoneNumber) };
 
+                if (!_validationService.ValidateEmail(request.AdditionalData?.Email))
+                    return new() { Success = false, Message = "Invalid email", Data = new(RegistrationResultCode.InvalidEmail) };
+
                 _carServiceRepository.Insert(new()
                 {
                     Username = request.Username,
