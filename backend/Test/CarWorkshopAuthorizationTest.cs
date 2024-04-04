@@ -3,6 +3,7 @@ using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization;
 using Model.Entities.CarService;
 using Model.Services;
+using Model.Entities.Constants;
 
 namespace Test
 {
@@ -30,6 +31,23 @@ namespace Test
             {
                 Username = "",
                 Password = "",
+                AdditionalData = new() { CompanyName = $"{CarWorkshopAuthorizationData.username}-company" },
+            };
+
+            var registrationResult = _carWorkshopService.Register(registrationArgs);
+
+            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.ValidationFailed);
+        }
+
+        [TestMethod]
+        public void RegistrationPasswordTooShort()
+        {
+            var password = Guid.NewGuid().ToString().Substring(0, ValidationConstants.MINIMAL_PASSWORD_LENGTH - 1);
+
+            var registrationArgs = new RegistrationRequest<CarWorkshopRegistrationArgs>()
+            {
+                Username = CarWorkshopAuthorizationData.username,
+                Password = password,
                 AdditionalData = new() { CompanyName = $"{CarWorkshopAuthorizationData.username}-company" },
             };
 
