@@ -4,6 +4,8 @@
     {
         DuplicateUsername,
         ValidationFailed,
+        InvalidPhoneNumber,
+        InvalidEmail,
         Success,
     }
 }

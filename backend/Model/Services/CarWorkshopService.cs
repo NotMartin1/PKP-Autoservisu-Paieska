@@ -32,6 +32,9 @@ namespace Model.Services
                 if (_carServiceRepository.CheckIfCompanyNameExsits(request.AdditionalData.CompanyName))
                     return new() { Success = false, Message = "Company with same already exsits" };
 
+                if (!string.IsNullOrWhiteSpace(request.AdditionalData.PhoneNumber) && !_validationService.ValidatePhoneNumber(request.AdditionalData.PhoneNumber))
+                    return new() { Success = false, Message = "Phone number is invalid", Data = new(RegistrationResultCode.InvalidPhoneNumber) };
+
                 _carServiceRepository.Insert(new()
                 {
                     Username = request.Username,

@@ -48,7 +48,12 @@ namespace Test
             {
                 Username = CarWorkshopAuthorizationData.username,
                 Password = password,
-                AdditionalData = new() { CompanyName = $"{CarWorkshopAuthorizationData.username}-company" },
+                AdditionalData = new()
+                {
+                    CompanyName = $"{CarWorkshopAuthorizationData.username}-company",
+                    PhoneNumber = PhoneNumberGenerator.GenerateLithuanianPhoneNumber(),
+                    Email = $"{CarWorkshopAuthorizationData.username}@test.com"
+                },
             };
 
             var registrationResult = _carWorkshopService.Register(registrationArgs);
@@ -65,12 +70,37 @@ namespace Test
             {
                 Username = CarWorkshopAuthorizationData.username,
                 Password = Guid.NewGuid().ToString(),
-                AdditionalData = new() { CompanyName = $"{CarWorkshopAuthorizationData.username}-company", PhoneNumber = phoneNumber },
+                AdditionalData = new() 
+                { 
+                    CompanyName = $"{CarWorkshopAuthorizationData.username}-company",
+                    PhoneNumber = phoneNumber,
+                    Email = $"{CarWorkshopAuthorizationData.username}@test.com"
+                },
             };
 
             var registrationResult = _carWorkshopService.Register(registrationArgs);
 
-            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.ValidationFailed);
+            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.InvalidPhoneNumber);
+        }
+
+        [TestMethod]
+        public void RegistrationEmailInvalid()
+        {
+            var email = "invalidemail";
+
+            var registrationArgs = new RegistrationRequest<CarWorkshopRegistrationArgs>()
+            {
+                Username = CarWorkshopAuthorizationData.username,
+                Password = Guid.NewGuid().ToString(),
+                AdditionalData = new() {
+                    CompanyName = $"{CarWorkshopAuthorizationData.username}-company",
+                    PhoneNumber = PhoneNumberGenerator.GenerateLithuanianPhoneNumber(),
+                    Email = email 
+                },
+            };
+
+            var registrationResult = _carWorkshopService.Register(registrationArgs);
+            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.InvalidEmail);
         }
     }
 }
