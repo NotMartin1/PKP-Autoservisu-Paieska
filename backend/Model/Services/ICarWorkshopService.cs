@@ -7,6 +7,7 @@ namespace Model.Services
 {
     public interface ICarWorkshopService
     {
+        ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);
     }
 }
