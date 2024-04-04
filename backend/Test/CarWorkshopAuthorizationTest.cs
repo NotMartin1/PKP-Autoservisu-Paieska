@@ -55,5 +55,22 @@ namespace Test
 
             Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.ValidationFailed);
         }
+
+        [TestMethod]
+        public void RegistrationPhoneNumberInvalid()
+        {
+            var phoneNumber = "+3712333312";
+
+            var registrationArgs = new RegistrationRequest<CarWorkshopRegistrationArgs>()
+            {
+                Username = CarWorkshopAuthorizationData.username,
+                Password = Guid.NewGuid().ToString(),
+                AdditionalData = new() { CompanyName = $"{CarWorkshopAuthorizationData.username}-company", PhoneNumber = phoneNumber },
+            };
+
+            var registrationResult = _carWorkshopService.Register(registrationArgs);
+
+            Assert.AreEqual(registrationResult.Data?.ResultCode, RegistrationResultCode.ValidationFailed);
+        }
     }
 }
