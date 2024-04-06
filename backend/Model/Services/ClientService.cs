@@ -39,6 +39,9 @@ namespace Model.Services
                         Data = new(RegistrationResultCode.ValidationFailed)
                     };
 
+                if (_clientRepository.CheckIfExsitsByUsername(request.Username))
+                    return new() { Success = false, Message = "Duplicate username", Data = new(RegistrationResultCode.DuplicateUsername) };
+
                 _clientRepository.Insert(new()
                 {
                     Username = request.Username,
