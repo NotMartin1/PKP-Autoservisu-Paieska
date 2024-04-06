@@ -104,7 +104,5 @@ namespace Model.Services
                 return new() { Success = false, Message = "Technical Error Occurred" };
             }
         }
-
-        public bool CheckIfExsitsById(int id) => _clientRepository.CheckIfExsitsById(id);
     }
 }
