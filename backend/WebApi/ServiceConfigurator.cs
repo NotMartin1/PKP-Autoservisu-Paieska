@@ -1,5 +1,4 @@
-﻿using Server.Core.Middleware;
-using SimpleInjector;
+﻿using SimpleInjector;
 
 namespace WebApi
 {
@@ -26,8 +25,6 @@ namespace WebApi
             });
 
             Model.ObjectContainerInitializer.Init(container);
-
-            services.AddScoped<TokenValidationFilter>();
         }
     }
 }
