@@ -1,4 +1,5 @@
-﻿using Model.Exstensions;
+﻿using Model.Entities.Car;
+using Model.Exstensions;
 using MySql.Data.MySqlClient;
 
 namespace Model.Repositories

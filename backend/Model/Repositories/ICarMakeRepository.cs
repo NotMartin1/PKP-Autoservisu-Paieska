@@ -1,4 +1,6 @@
-﻿namespace Model.Repositories
+﻿using Model.Entities.Car;
+
+namespace Model.Repositories
 {
     public interface ICarMakeRepository
     {
