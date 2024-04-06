@@ -12,12 +12,14 @@ namespace Test
     public class ClientAutorizationTest
     {
         private readonly IClientService _clientService;
+        private readonly IClientRepository _clientRepository;
 
         public ClientAutorizationTest()
         {
             var container = ConfigurationMock.GetContainer();
 
             _clientService = container.GetInstance<IClientService>();
+            _clientRepository = container.GetInstance<IClientRepository>();
         }
 
         [TestMethod]
@@ -92,6 +94,57 @@ namespace Test
 
             result = _clientService.Register(registrationArgs);
             Assert.AreEqual(result?.Data?.ResultCode, RegistrationResultCode.DuplicateUsername);
+        }
+
+        [TestMethod]
+        public void LoginMissingCredentials()
+        {
+            var loginArgs = new LoginRequest()
+            {
+                Username = "",
+                Password = "",
+            };
+
+            var result = _clientService.Login(loginArgs);
+
+            Assert.AreEqual(result?.Data?.ResultCode, LoginResultCode.InvalidCredentials);
+        }
+
+        [TestMethod]
+        public void LoginInvalidCredentials()
+        {
+            var loginArgs = new LoginRequest()
+            {
+                Username = Guid.NewGuid().ToString(),
+                Password = Guid.NewGuid().ToString(),
+            };
+
+            var result = _clientService.Login(loginArgs);
+
+            Assert.AreEqual(result?.Data?.ResultCode, LoginResultCode.InvalidCredentials);
+        }
+
+        [TestMethod]
+        public void LoginSuccess()
+        {
+            var username = Guid.NewGuid().ToString();
+            var password = Guid.NewGuid().ToString();
+
+            _clientRepository.Insert(new ClientExtendedData()
+            {
+                Username = username,
+                Password = password,
+                Fullname = Guid.NewGuid().ToString(),
+                IsEnabled = true
+            });
+
+            var result = _clientService.Login(new()
+            {
+                Username = username,
+                Password = password
+            });
+
+            Assert.AreEqual(result?.Data?.ResultCode, LoginResultCode.Authorized);
         }
     }
 }
