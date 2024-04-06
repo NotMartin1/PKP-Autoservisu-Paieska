@@ -6,5 +6,6 @@ namespace Model.Repositories
     {
         void Delete(CarDeleteRequest request);
         void Insert(CarAddRequest args);
+        List<CarAddRequest> List(int clientId);
     }
 }

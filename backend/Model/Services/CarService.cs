@@ -48,41 +48,58 @@ namespace Model.Services
             }
         }
 
-        public ServiceResult AddCar(CarAddRequest request)
+        public ServiceResult<CarCreateResult> AddCar(CarAddRequest request)
         {
             try
             {
                 if (!request.ClientId.HasValue)
-                    return new(false, "ClientId is not specified");
+                    return new() { Success = false, Message = "ClientId not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (!request.MakeId.HasValue)
-                    return new(false, "MakeId is not specified");
+                    return new() { Success = false, Message = "MakeId not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (string.IsNullOrWhiteSpace(request.Model))
-                    return new(false, "Model is not specified");
+                    return new() { Success = false, Message = "Model not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (string.IsNullOrWhiteSpace(request.Engine))
-                    return new(false, "Engine is not specified");
+                    return new() { Success = false, Message = "Engine is not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (!request.Mileage.HasValue)
-                    return new(false, "Mileage is not specified");
+                    return new() { Success = false, Message = "Mileage is not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (!request.ProductionYear.HasValue)
-                    return new(false, "Production year is not specified");
+                    return new() { Success = false, Message = "Production year is not specified", Data = CarCreateResult.ValidationFailed };
 
                 if (!_clientService.CheckIfExsitsById(request.ClientId.Value))
-                    return new(false, $"Cannot find client by Id: {request.ClientId}");
+                    return new() { Success = false, Message = $"Cannot find client with Id: ${request.ClientId.Value}", Data = CarCreateResult.ClientNotFound };
 
                 if (!_carMakeRepository.CheckIfExsitsById(request.MakeId.Value))
-                    return new(false, $"Cannot find make by Id: {request.MakeId}");
+                    return new() { Success = false, Message = $"Cannot find make with Id: ${request.MakeId.Value}", Data = CarCreateResult.MakeNotFound };
 
                 _carRepository.Insert(request);
 
-                return new(true);
+                return new() { Success = true, Data = CarCreateResult.Created };
             }
             catch (Exception ex)
             {
-                return new(false, "Technical Error Occurred");
+                return new() { Success = false, Message = "Technical Error Occurred", Data = CarCreateResult.TechnicalError };
+            }
+        }
+
+        public ServiceResult<List<CarAddRequest>> GetClientCars(int clientId)
+        {
+            try
+            {
+                if (clientId == 0)
+                    return new() { Success = false, Message = "Client Id is not specified" };
+
+                var list = _carRepository.List(clientId);
+
+                return new() { Success = true, Data = list };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = "Technical Error Occurred" };
             }
         }
 

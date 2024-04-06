@@ -6,9 +6,10 @@ namespace Model.Services
 {
     public interface ICarService
     {
-        ServiceResult AddCar(CarAddRequest request);
+        ServiceResult<CarCreateResult> AddCar(CarAddRequest request);
         ServiceResult CreateMake(CarMakeCreateRequest request);
         ServiceResult DeleteCar(CarDeleteRequest request);
         ServiceResult<List<CarMake>> GetMakes();
+        ServiceResult<List<CarAddRequest>> GetClientCars(int clientId);
     }
 }

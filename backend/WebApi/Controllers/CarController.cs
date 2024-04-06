@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Add")]
-        public ServiceResult AddCar([FromBody] CarAddRequest request)
+        public ServiceResult<CarCreateResult> AddCar([FromBody] CarAddRequest request)
         {
             return _carService.AddCar(request);
         }
@@ -39,6 +39,12 @@ namespace WebApi.Controllers
         public ServiceResult DeleteCar([FromBody] CarDeleteRequest request)
         {
             return _carService.DeleteCar(request);
+        }
+
+        [HttpGet("List")]
+        public ServiceResult<List<CarAddRequest>> GetCars([FromQuery] int clientId)
+        {
+            return _carService.GetClientCars(clientId);
         }
     }
 }

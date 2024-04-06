@@ -38,5 +38,17 @@ namespace Model.Repositories
 
             _genericRepository.ExecuteNonQuery(sql);
         }
+
+        public List<CarAddRequest> List(int clientId)
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Id, MakeId, Model, Engine, Mileage, Year, ClientId
+            FROM {TABLE_NAME}
+            WHERE ClientId = ?clientId");
+
+            sql.AddParameter("?clientId", clientId);
+
+            return _genericRepository.FetchList<CarAddRequest>(sql);
+        }
     }
 }
