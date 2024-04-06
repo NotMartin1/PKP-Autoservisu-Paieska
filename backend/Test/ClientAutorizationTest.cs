@@ -146,5 +146,28 @@ namespace Test
 
             Assert.AreEqual(result?.Data?.ResultCode, LoginResultCode.Authorized);
         }
+
+        [TestMethod]
+        public void LoginUserDisabled()
+        {
+            var username = Guid.NewGuid().ToString();
+            var password = Guid.NewGuid().ToString();
+
+            _clientRepository.Insert(new ClientExtendedData()
+            {
+                Username = username,
+                Password = password,
+                Fullname = Guid.NewGuid().ToString(),
+                IsEnabled = false
+            });
+
+            var result = _clientService.Login(new()
+            {
+                Username = username,
+                Password = password
+            });
+
+            Assert.AreEqual(result?.Data?.ResultCode, LoginResultCode.UserDisabled);
+        }
     }
 }
