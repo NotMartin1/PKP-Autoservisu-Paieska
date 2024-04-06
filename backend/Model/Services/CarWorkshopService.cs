@@ -3,6 +3,8 @@ using Model.Entities.Authorization;
 using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
 using Model.Entities.CarService;
+using Model.Entities.CarWorkshop;
+using Model.Entities.Filter;
 using Model.Repositories;
 
 namespace Model.Services
@@ -76,6 +78,19 @@ namespace Model.Services
             catch (Exception ex)
             {
                 return new() { Success = false, Message = "Technical Error Occurred" };
+            }
+        }
+
+        public ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs args)
+        {
+            try
+            {
+                var list = _carServiceRepository.List(args);
+                return new() { Success = true, Data = list };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = $"Failed to fetch car workshop list due to: {ex.Message}" };
             }
         }
     }
