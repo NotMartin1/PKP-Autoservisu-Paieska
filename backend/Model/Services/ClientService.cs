@@ -28,6 +28,9 @@ namespace Model.Services
                     Password = request.Password,
                 });
 
+                if (string.IsNullOrWhiteSpace(request.AdditionalData?.Fullname))
+                    return new() { Success = false, Message = "Fullname is missing", Data = new(RegistrationResultCode.ValidationFailed) };
+               
                 if (!credentialsValidationResult.Success)
                     return new()
                     {

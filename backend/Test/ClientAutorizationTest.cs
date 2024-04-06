@@ -27,6 +27,7 @@ namespace Test
             {
                 Username = "",
                 Password = "",
+                AdditionalData = new(),
             };
 
             var result = _clientService.Register(registrationArgs);
@@ -43,6 +44,10 @@ namespace Test
             {
                 Username = Guid.NewGuid().ToString(),
                 Password = password,
+                AdditionalData = new()
+                {
+                    Fullname = Guid.NewGuid().ToString(),
+                }
             };
 
             var result = _clientService.Register(registrationArgs);
@@ -57,6 +62,10 @@ namespace Test
             {
                 Username = Guid.NewGuid().ToString(),
                 Password = Guid.NewGuid().ToString(),
+                AdditionalData = new()
+                {
+                    Fullname = Guid.NewGuid().ToString(),
+                }
             };
 
             var result = _clientService.Register(registrationArgs);
