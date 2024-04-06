@@ -76,8 +76,8 @@ namespace Model.Repositories
                 sc.Name AS Specialization,
                 AVG(f.Rating) AS AverageRating
             FROM serviceShop sshp
-            INNER JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
-            INNER JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
+            LEFT JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
+            LEFT JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
             LEFT JOIN feedback f ON sshp.Id = f.ShopId");
 
             var where = new List<string>();

@@ -14,6 +14,9 @@ namespace Model
             container.Register<IValidationService, ValidationService>();
             container.Register<IClientService, ClientService>();
             container.Register<IClientRepository, ClientRepository>();
+            container.Register<ICarService, CarService>();
+            container.Register<ICarMakeRepository, CarMakeRepository>();
+            container.Register<ICarRepository, CarRepository>();
         }
     }
 }
