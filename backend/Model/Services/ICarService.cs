@@ -8,6 +8,7 @@ namespace Model.Services
     {
         ServiceResult AddCar(CarAddRequest request);
         ServiceResult CreateMake(CarMakeCreateRequest request);
+        ServiceResult DeleteCar(CarDeleteRequest request);
         ServiceResult<List<CarMake>> GetMakes();
     }
 }

@@ -34,5 +34,11 @@ namespace WebApi.Controllers
         {
             return _carService.AddCar(request);
         }
+
+        [HttpPost("Delete")]
+        public ServiceResult DeleteCar([FromBody] CarDeleteRequest request)
+        {
+            return _carService.DeleteCar(request);
+        }
     }
 }

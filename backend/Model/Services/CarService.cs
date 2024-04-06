@@ -85,5 +85,19 @@ namespace Model.Services
                 return new(false, "Technical Error Occurred");
             }
         }
+
+        public ServiceResult DeleteCar(CarDeleteRequest request)
+        {
+            try
+            {
+                _carRepository.Delete(request);
+
+                return new(true);
+            }
+            catch (Exception ex)
+            {
+                return new(false, "Technical Error Occurred");
+            }
+        }
     }
 }

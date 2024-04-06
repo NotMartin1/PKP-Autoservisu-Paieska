@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Model.Repositories
 {
-    public class CarRepository : ICarRepository1
+    public class CarRepository : ICarRepository
     {
         private readonly IGenericRepository _genericRepository;
 
@@ -24,6 +24,17 @@ namespace Model.Repositories
             (?makeId, ?model, ?engine, ?mileage, ?productionYear, ?clientId)");
 
             sql.AddParametersFromObject(args);
+
+            _genericRepository.ExecuteNonQuery(sql);
+        }
+
+        public void Delete(CarDeleteRequest request)
+        {
+            var sql = new MySqlCommand($@"
+            DELETE FROM {TABLE_NAME}
+            WHERE Id = ?id");
+
+            sql.AddParameter("?id", request.CarId);
 
             _genericRepository.ExecuteNonQuery(sql);
         }
