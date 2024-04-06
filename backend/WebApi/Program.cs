@@ -20,6 +20,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<ExtendTokenExpirationMiddleware>();
-
 app.Run();

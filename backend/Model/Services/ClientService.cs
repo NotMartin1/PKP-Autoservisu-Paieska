@@ -58,5 +58,49 @@ namespace Model.Services
                 return new() { Success = false, Message = "Technical Error Occurred" };
             }
         }
+
+        public ServiceResult<LoginResponse<ClientBasicData>> Login(LoginRequest request)
+        {
+            try
+            {
+                var credentialsValidationResult = _validationService.ValidateCredentails(new()
+                {
+                    Username = request.Username,
+                    Password = request.Password,
+                });
+
+                if (!credentialsValidationResult.Success)
+                    return new()
+                    {
+                        Success = false,
+                        Message = credentialsValidationResult.Message,
+                        Data = new(LoginResultCode.InvalidCredentials)
+                    };
+
+                if (!_clientRepository.ValidateCredentials(request.Username, request.Password))
+                    return new()
+                    {
+                        Success = false,
+                        Message = "Invalid credentials",
+                        Data = new(LoginResultCode.InvalidCredentials)
+                    };
+
+                var clientData = _clientRepository.GetBasicByUsername(request.Username);
+
+                return new()
+                {
+                    Success = true,
+                    Data = new()
+                    {
+                        ResultCode = LoginResultCode.Authorized,
+                        UserData = clientData,
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = "Technical Error Occurred" };
+            }
+        }
     }
 }

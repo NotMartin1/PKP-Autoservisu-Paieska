@@ -8,5 +8,6 @@ namespace Model.Services
     public interface IClientService
     {
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<ClientRegistrationData> request);
+        ServiceResult<LoginResponse<ClientBasicData>> Login(LoginRequest request);
     }
 }

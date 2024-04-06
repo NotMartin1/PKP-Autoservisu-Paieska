@@ -4,7 +4,10 @@ namespace Model.Repositories
 {
     public interface IClientRepository
     {
-        bool CheckIfExsitsByUsername(string username);
         void Insert(ClientExtendedData client);
+        ClientBasicData GetBasicByUsername(string username);
+        bool CheckIfExsitsByUsername(string username);
+        bool ValidateCredentials(string username, string password);
+        bool CheckIfExsitsById(int id);
     }
 }

@@ -3,7 +3,7 @@ using Model.Entities;
 using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
 using Model.Entities.Client;
-using Model.Services.Interfaces;
+using Model.Services;
 
 namespace WebApi.Controllers
 {
@@ -22,6 +22,15 @@ namespace WebApi.Controllers
         public ServiceResult<RegistrationResponse> Register([FromBody] RegistrationRequest<ClientRegistrationData> request)
         {
             return _usersService.Register(request);
+        }
+
+
+        [HttpPost("Login")]
+        public ServiceResult<LoginResponse<ClientBasicData>> Login([FromBody] LoginRequest request)
+        {
+            var authorizationResult = _usersService.Login(request);
+
+            return authorizationResult;
         }
     }
 }
