@@ -77,7 +77,7 @@ namespace Model.Services
                         Data = new(LoginResultCode.InvalidCredentials)
                     };
 
-                if (!_clientRepository.ValidateCredentials(request.Username, request.Password))
+                if (!_clientRepository.ValidateCredentials(request.Username!, request?.Password!))
                     return new()
                     {
                         Success = false,
@@ -85,8 +85,10 @@ namespace Model.Services
                         Data = new(LoginResultCode.InvalidCredentials)
                     };
 
-                var clientData = _clientRepository.GetBasicByUsername(request.Username);
-
+                var clientData = _clientRepository.GetBasicByUsername(request?.Username!);
+                if (!clientData.IsEnabled)
+                    return new() { Success = false, Message = "User is disabled", Data = new(LoginResultCode.UserDisabled) };
+                
                 return new()
                 {
                     Success = true,
