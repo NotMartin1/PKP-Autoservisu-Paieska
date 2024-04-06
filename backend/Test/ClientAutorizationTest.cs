@@ -72,5 +72,26 @@ namespace Test
 
             Assert.AreEqual(result.Data?.ResultCode, RegistrationResultCode.Success);
         }
+
+        [TestMethod]
+        public void RegistrationUsernameDuplicate()
+        {
+            var registrationArgs = new RegistrationRequest<ClientRegistrationData>()
+            {
+                Username = Guid.NewGuid().ToString(),
+                Password = Guid.NewGuid().ToString(),
+                AdditionalData = new()
+                {
+                    Fullname = Guid.NewGuid().ToString(),
+                }
+            };
+
+            var result = _clientService.Register(registrationArgs);
+            if (result.Data?.ResultCode != RegistrationResultCode.Success)
+                Assert.Fail("First registration unsuccessfull");
+
+            result = _clientService.Register(registrationArgs);
+            Assert.AreEqual(result?.Data?.ResultCode, RegistrationResultCode.DuplicateUsername);
+        }
     }
 }
