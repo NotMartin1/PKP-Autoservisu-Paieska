@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {Row, Col} from 'reactstrap';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -13,6 +14,7 @@ import FormInput from 'shared-components/src/FormInput';
 import { Path } from './constants/StaticPaths';
 import { Endpoint } from './constants/Endpoints';
 import { RootState } from '../store/store';
+
 
 const Registration = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -124,23 +126,38 @@ const Registration = () => {
         <h1 className='center mb-4'>Registracija</h1>
         <FormInput
           placeholder='Įveskite vardą bei pavardę'
+          onChange={(e) => { setFullNameState(({value: e, invalid: false})); setErrorMessage(null);}}
+          value={fullNameState.value}
+          isInvalid={fullNameState.invalid}
           label='Jūsų pilnas vardas'
           additionalClassname='mt-3'
         />
         <FormInput
           placeholder='Įveskite prisijungimo vardą'
+          onChange={(e) => { setLoginState(({value: e, invalid: false})); setErrorMessage(null); }}
+          value={loginState.value}
+          isInvalid={loginState.invalid}
           label='Prisijungimo vardas'
           additionalClassname='mt-3'
         />
         <FormInput
           isPassword
           placeholder='Įveskite slaptažodį'
+          onChange={(e) => { setPasswordState(({value: e, invalid: false})); setErrorMessage(null);}
+          }
+          value={passwordState.value}
+          isInvalid={passwordState.invalid}
           label='Slaptažodis'
           additionalClassname='mt-3'
         />
         <FormInput
           isPassword
           placeholder='Įveskite slaptažodį pakartotinai'
+          onChange={(e) => { setRepeatPasswordState(({value: e, invalid: false})); setErrorMessage(null);}
+          }
+          onBlur={() => setErrorMessage(repeatPasswordState.value === passwordState.value ? null : 'Nesutampa slaptažodžiai!')}
+          value={repeatPasswordState.value}
+          isInvalid={repeatPasswordState.invalid}
           label='Slaptažodžio pakartojimas'
           additionalClassname='mt-3'
         />
@@ -148,6 +165,7 @@ const Registration = () => {
           <Col>
             <span className='center mt-3' style={{ whiteSpace: 'pre-wrap' }}>
               {'Turite autoservisą? '}
+              <Link to={Path.WorkshopRegistration}>Registracija verslui.</Link>
             </span>
           </Col>
         </Row>
@@ -155,18 +173,21 @@ const Registration = () => {
           <Col>
             <span className='center mt-1' style={{ whiteSpace: 'pre-wrap' }}>
               {'Jau turite paskyrą? '}
+              <Link to={Path.Login}>Prisijungti.</Link>
             </span>
           </Col>
         </Row>  
         <Row className='mt-2'>
           <Col className='center' style={{ color: 'red', fontSize: '16px'}}>
-            Klaidos pranešimas
+            {errorMessage}
           </Col>
         </Row>
         <Row>
           <Col className='center mt-3'>
             <Button
-              label={'Registruotis'}
+              label={isProcessing ? 'Kraunama...': 'Registruotis'}
+              onClick={() => onRegister()}
+              disabled={fullNameState.invalid || loginState.invalid || passwordState.invalid || repeatPasswordState.invalid || isProcessing}
             >
             </Button>
           </Col>
