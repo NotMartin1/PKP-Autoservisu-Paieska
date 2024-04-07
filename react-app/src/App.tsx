@@ -8,6 +8,8 @@ import Login from './components/Login';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import UsersList from './components/UsersList';
+import Registration from './components/Registration';
+
 import { Path } from './components/constants/StaticPaths';
 
 import './css/app.css';
@@ -27,6 +29,7 @@ const App = () => {
     <Layout>
       <Route exact path='/login' component={Login} />
       <Route exact path='/dashboard' component={Dashboard}/>
+      <Route exact path='/registration' component={Registration} />
       <Route exact path='/users' component={UsersList}/>
     </Layout>
   );
