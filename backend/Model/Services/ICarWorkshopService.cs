@@ -12,5 +12,6 @@ namespace Model.Services
         ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs request);
         ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);
+        ServiceResult SetWorkingHours(CarWorkshopWorkingHoursCreateArgs request);
     }
 }

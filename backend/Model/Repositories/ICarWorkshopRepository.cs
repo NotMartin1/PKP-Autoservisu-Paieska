@@ -10,6 +10,7 @@ namespace Model.Repositories
         CarWorkshopBasicData GetBasicByUsername(string username);
         void Insert(CarWorkshopExtendedData args);
         List<CarWorkshopDisplayBasicData> List(ListArgs args);
+        void SetWorkingHours(int id, string monday, string tuesday, string wednesday, string thursday, string friday, string saturday, string sunday);
         bool ValidateCredentials(string username, string password);
     }
 }
