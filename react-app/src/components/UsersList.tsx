@@ -1,19 +1,9 @@
 //@ts-nocheck
 import { useEffect, useState } from 'react';
 
-import helpersRequest from '../functions/helpersRequest';
-
 const UsersList = props => {
 
   const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    helpersRequest.get('user/list')
-      .then(data => {
-        setUsers(data);
-      })
-      .catch(error => console.log(`Failed to load users due to ${error}`));
-  }, []);
 
   if (!users || users.length == 0)
     return (
