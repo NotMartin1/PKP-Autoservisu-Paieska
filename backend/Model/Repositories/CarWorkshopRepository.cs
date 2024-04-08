@@ -3,7 +3,6 @@ using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 using Model.Exstensions;
 using MySql.Data.MySqlClient;
-
 namespace Model.Repositories
 {
     public class CarWorkshopRepository : ICarWorkshopRepository
@@ -29,8 +28,41 @@ namespace Model.Repositories
 
             _genericRepository.ExecuteNonQuery(sql);
         }
+        
 
-        public bool CheckIfCompanyNameExsits(string companyName)
+        public void SetWorkingHours(int carWorkshopId, string monday, string tuesday, string wednesday, string thursday, string friday, string saturday, string sunday) 
+        {
+            var sql = new MySqlCommand($@"
+            INSERT INTO workinghours
+            (ShopId, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+            VALUES
+            (?carWorkshopId, ?monday, ?tuesday, ?wednesday, ?thursday, ?friday, ?saturday, ?sunday)");
+
+            sql.AddParameter("?carWorkshopId", carWorkshopId);
+            sql.AddParameter("?monday", monday);
+            sql.AddParameter("?tuesday", tuesday);
+            sql.AddParameter("?wednesday", wednesday);
+            sql.AddParameter("?thursday", thursday);
+            sql.AddParameter("?friday", friday);
+            sql.AddParameter("?saturday", saturday);
+            sql.AddParameter("?sunday", sunday);
+
+            _genericRepository.ExecuteNonQuery(sql);
+        }
+
+        public CarWorkshopWorkingHoursData GetWorkingHours(int carWorkshopId) // Add return type for the method
+        {
+            var sql = new MySqlCommand($@"
+            SELECT Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+            FROM workinghours
+            WHERE ShopId = ?carWorkshopId");
+
+            sql.AddParameter("?carWorkshopId", carWorkshopId);
+            
+            return _genericRepository.FetchSingle<CarWorkshopWorkingHoursData>(sql);
+            }
+
+        public bool CheckIfCompanyNameExists(string companyName) // Fix typo in method name
         {
             var sql = new MySqlCommand($@"
             SELECT COUNT(*)
@@ -129,5 +161,14 @@ namespace Model.Repositories
 
             return _genericRepository.FetchList<CarWorkshopDisplayBasicData>(sql);
         }
+
+        public bool CheckIfCompanyNameExsits(string companyName)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
+
+  
 }

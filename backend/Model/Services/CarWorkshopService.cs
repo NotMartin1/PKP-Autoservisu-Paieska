@@ -93,5 +93,43 @@ namespace Model.Services
                 return new() { Success = false, Message = $"Failed to fetch car workshop list due to: {ex.Message}" };
             }
         }
+
+        public ServiceResult SetWorkingHours(CarWorkshopWorkingHoursCreateArgs request)
+        {
+            try
+            {
+                if (request.workshopId == 0)
+                    return new() { Success = false, Message = "ShopId is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Monday))
+                    return new() { Success = false, Message = "Monday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Tuesday))
+                    return new() { Success = false, Message = "Tuesday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Wednesday))
+                    return new() { Success = false, Message = "Wednesday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Thursday))
+                    return new() { Success = false, Message = "Thursday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Friday))
+                    return new() { Success = false, Message = "Friday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Saturday))
+                    return new() { Success = false, Message = "Saturday is not specified" };
+
+                if (string.IsNullOrWhiteSpace(request.Sunday))
+                    return new() { Success = false, Message = "Sunday is not specified" };
+
+                _carServiceRepository.SetWorkingHours(request.workshopId, request.Monday, request.Tuesday, request.Wednesday, request.Thursday, request.Friday, request.Saturday, request.Sunday);
+
+                return new() { Success = true };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = "Technical Error Occurred" };
+            }
+        }
     }
 }
