@@ -22,5 +22,10 @@ namespace WebApi.Controllers
         {
             return _carWorkshopService.List(request);
         }
+        [HttpPost("SetWorkingHours")]
+        public ServiceResult SetWorkingHours([FromBody] CarWorkshopWorkingHoursCreateArgs request)
+        {
+            return _carWorkshopService.SetWorkingHours(request);
+        }
     }
 }
