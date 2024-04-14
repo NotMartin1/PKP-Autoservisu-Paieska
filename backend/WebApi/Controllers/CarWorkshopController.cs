@@ -27,5 +27,11 @@ namespace WebApi.Controllers
         {
             return _carWorkshopService.SetWorkingHours(request);
         }
+        
+        [HttpGet("{id}/details")]
+        public ServiceResult<CarWorkshopDetails> GetCarWorkshopDetails(int id)
+        {
+            return _carWorkshopService.GetCarWorkshopDetails(id);
+        }
     }
 }
