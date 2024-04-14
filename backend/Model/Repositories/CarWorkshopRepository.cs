@@ -49,6 +49,62 @@ namespace Model.Repositories
 
             _genericRepository.ExecuteNonQuery(sql);
         }
+        public CarWorkshopDetails GetCarWorkshopDetails(int id){
+            var sql = new MySqlCommand($@"
+            SELECT 
+            sshp.CompanyName,
+            sshp.Address,
+            sshp.PhoneNumber,
+            sshp.Email,
+            sshp.Website,
+            sshp.Description,
+            wh.Monday,
+            wh.Tuesday,
+            wh.Wednesday,
+            wh.Thursday,
+            wh.Friday,
+            wh.Saturday,
+            wh.Sunday
+        FROM serviceshop sshp
+        LEFT JOIN workinghours wh ON sshp.Id = wh.ShopId
+        WHERE sshp.Id = ?id");
+
+    sql.Parameters.AddWithValue("?id", id);
+
+    using (var reader = sql.ExecuteReader())
+    {
+        if (reader.Read())
+        {
+            var carWorkshop = new CarWorkshopDetails
+            {
+                CompanyName = reader.GetString("CompanyName"),
+                Address = reader.GetString("Address"),
+                PhoneNumber = reader.GetString("PhoneNumber"),
+                Email = reader.GetString("Email"),
+                Website = reader.GetString("Website"),
+                Description = reader.GetString("Description"),
+                WorkingHours = new WorkingHours
+                {
+                    Monday = reader.GetString("Monday"),
+                    Tuesday = reader.GetString("Tuesday"),
+                    Wednesday = reader.GetString("Wednesday"),
+                    Thursday = reader.GetString("Thursday"),
+                    Friday = reader.GetString("Friday"),
+                    Saturday = reader.GetString("Saturday"),
+                    Sunday = reader.GetString("Sunday")
+                }
+            };
+
+            return carWorkshop;
+        }
+    }
+            
+            
+             
+
+
+            return _genericRepository.FetchSingle<CarWorkshopDetails>(sql);
+        }
 
         public CarWorkshopWorkingHoursData GetWorkingHours(int carWorkshopId) // Add return type for the method
         {

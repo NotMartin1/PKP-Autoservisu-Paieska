@@ -128,7 +128,20 @@ namespace Model.Services
             }
             catch (Exception ex)
             {
-                return new() { Success = false, Message = "Technical Error Occurred" };
+                return new() { Success = false, Message = ex.Message };
+            }
+        }
+
+        public ServiceResult<CarWorkshopDetails> GetCarWorkshopDetails(int id)
+        {
+            try
+            {
+                var details = _carServiceRepository.GetCarWorkshopDetails(id);
+                return new() { Success = true, Data = details };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = ex.Message };
             }
         }
     }
