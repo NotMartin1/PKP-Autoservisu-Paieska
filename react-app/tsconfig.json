@@ -16,7 +16,7 @@
       "isolatedModules": true,
       "jsx": "react-jsx",
       "baseUrl": "./src",
-      "types": ["@testing-library/jest-dom"],
+      "types": ["@testing-library/jest-dom", "node"],
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json"],
     "exclude": ["node_modules"]

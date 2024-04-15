@@ -9,6 +9,10 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import Registration from './Registration';
 import authReducer from '../store/slices/authSlice';
+import { Endpoint } from './constants/Endpoints';
+import { toast } from 'react-toastify';
+import { ApiService } from 'services/ApiService';
+import { useDispatch } from 'react-redux';
 
 const renderWithRedux = (
   component,
@@ -26,7 +30,7 @@ const renderWithRedux = (
   }
 };
 
-test('renders Registration component', () => {
+describe('Unit tests', () => {test('renders Registration component', () => {
   const { getAllByText } = renderWithRedux(<Registration />);
   const elements = getAllByText(/Registracija/i);
   expect(elements.length).toBeGreaterThan(0);
@@ -91,4 +95,65 @@ test('shows error message when full name is missing', () => {
   const { getByLabelText, getByText } = renderWithRedux(<Registration />);
   fireEvent.click(getByLabelText(/Registruotis/i));
   expect(getByText('Neužpildyti privalomi laukeliai!')).toBeInTheDocument();
+});});
+
+///
+///
+/// Integrational tests
+///
+///
+
+describe('Integrational tests', () => {
+  beforeAll(() => {
+
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('submits the form and registers user', async () => {
+
+    jest.spyOn(global, 'fetch').mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({data: {Success: true}}),
+      }) as Promise<Response>
+    );
+
+    const toastSpy = jest.spyOn(toast, 'success');
+    const { getByLabelText, getByText } = renderWithRedux(<Registration />);
+
+    fireEvent.change(getByLabelText(/Jūsų pilnas vardas/i), { target: { value: 'John Doe' } });
+    fireEvent.change(getByLabelText(/Prisijungimo vardas/i), { target: { value: 'johndoe@mail.com' } });
+    fireEvent.change(getByLabelText(/Slaptažodis/i), { target: { value: 'password123' } });
+    fireEvent.change(getByLabelText(/Slaptažodžio pakartojimas/i), { target: { value: 'password123' } });
+
+    fireEvent.click(getByLabelText(/Registruotis/i));
+    await waitFor(() => {
+      expect(toastSpy).toHaveBeenCalled();
+    });
+  });
+
+  test('fails to submit the form and register the user', async () => {
+    jest.spyOn(global, 'fetch').mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: false,
+        json: () => Promise.resolve({data: {Success: false}}),
+      }) as Promise<Response>
+    );
+
+    const toastSpy = jest.spyOn(toast, 'error');
+    const { getByLabelText, getByText } = renderWithRedux(<Registration />);
+
+    fireEvent.change(getByLabelText(/Jūsų pilnas vardas/i), { target: { value: 'John Doe' } });
+    fireEvent.change(getByLabelText(/Prisijungimo vardas/i), { target: { value: 'johndoe@mail.com' } });
+    fireEvent.change(getByLabelText(/Slaptažodis/i), { target: { value: 'password123' } });
+    fireEvent.change(getByLabelText(/Slaptažodžio pakartojimas/i), { target: { value: 'password123' } });
+
+    fireEvent.click(getByLabelText(/Registruotis/i));
+    await waitFor(() => {
+      expect(toastSpy).toHaveBeenCalled();
+    });
+  });
 });
