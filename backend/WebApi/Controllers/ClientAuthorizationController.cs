@@ -4,6 +4,7 @@ using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
 using Model.Entities.Client;
 using Model.Services;
+using Model.Services.Interfaces;
 
 namespace WebApi.Controllers
 {

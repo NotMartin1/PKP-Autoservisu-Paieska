@@ -1,5 +1,6 @@
 ﻿using Model.Repositories;
 using Model.Services;
+using Model.Services.Interfaces;
 using SimpleInjector;
 
 namespace Model

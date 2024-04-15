@@ -2,6 +2,7 @@
 using Model.Entities.Car;
 using Model.Entities.Car.Request;
 using Model.Repositories;
+using Model.Services.Interfaces;
 
 namespace Model.Services
 {

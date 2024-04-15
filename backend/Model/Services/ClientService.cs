@@ -4,7 +4,7 @@ using Model.Entities.Authorization;
 using Model.Entities.Authorization.Request;
 using Model.Entities.Authorization.Response;
 using Model.Entities.Client;
-using Model.Repositories.Interfaces;
+using Model.Repositories;
 using Model.Services.Interfaces;
 
 namespace Model.Services

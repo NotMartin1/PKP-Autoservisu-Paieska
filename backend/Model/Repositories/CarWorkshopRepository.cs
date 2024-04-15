@@ -3,7 +3,6 @@ using Model.Entities.CarService;
 using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 using Model.Exstensions;
-using Model.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
 
 namespace Model.Repositories

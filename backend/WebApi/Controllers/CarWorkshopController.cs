@@ -3,6 +3,7 @@ using Model.Entities;
 using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 using Model.Services;
+using Model.Services.Interfaces;
 
 namespace WebApi.Controllers
 {

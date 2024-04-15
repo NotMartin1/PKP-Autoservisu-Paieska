@@ -5,6 +5,7 @@ using Model.Entities.Client;
 using Model.Entities.Constants;
 using Model.Repositories;
 using Model.Services;
+using Model.Services.Interfaces;
 
 namespace Test
 {

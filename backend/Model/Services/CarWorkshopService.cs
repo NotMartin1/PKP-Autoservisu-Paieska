@@ -5,7 +5,7 @@ using Model.Entities.Authorization.Response;
 using Model.Entities.CarService;
 using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
-using Model.Repositories.Interfaces;
+using Model.Repositories;
 using Model.Services.Interfaces;
 
 namespace Model.Services
@@ -112,7 +112,10 @@ namespace Model.Services
             }
         }
 
-        public bool CheckIfExsistsById(int id) => _carServiceRepository.CheckIfExsistsById(id);
+        public bool CheckIfExsistsById(int id)
+        {
+            return _carServiceRepository.CheckIfExsistsById(id);
+        }
 
         public string GetPasswordByUsername(string username)
         {

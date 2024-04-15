@@ -13,5 +13,6 @@ namespace Model.Repositories
         void Insert(CarWorkshopExtendedData args);
         List<CarWorkshopDisplayBasicData> List(ListArgs args);
         bool ValidateCredentials(string username, string password);
+        bool CheckIfExsistsById(int id);
     }
 }
