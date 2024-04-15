@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj": {}
+    "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj": {}
   },
   "projects": {
     "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj": {
@@ -94,14 +94,14 @@
         }
       }
     },
-    "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj": {
+    "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj",
         "projectName": "Server.Core",
-        "projectPath": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj",
+        "projectPath": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\Server.Core.csproj",
         "packagesPath": "C:\\Users\\Pijus\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\obj\\",
+        "outputPath": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Server.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Pijus\\AppData\\Roaming\\NuGet\\NuGet.Config"
