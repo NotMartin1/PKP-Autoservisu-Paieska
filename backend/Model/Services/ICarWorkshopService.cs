@@ -10,6 +10,7 @@ namespace Model.Services
     public interface ICarWorkshopService
     {
         ServiceResult<CarWorkshopDetails> GetCarWorkshopDetails(int id);
+        ServiceResult<WorkingHours> GetCarWorkshopWorkingHours(int id);
         ServiceResult<List<CarWorkshopDisplayBasicData>> List(ListArgs request);
         ServiceResult<LoginResponse<CarWorkshopBasicData>> Login(LoginRequest request);
         ServiceResult<RegistrationResponse> Register(RegistrationRequest<CarWorkshopRegistrationArgs> request);

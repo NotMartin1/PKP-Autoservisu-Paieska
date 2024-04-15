@@ -144,5 +144,17 @@ namespace Model.Services
                 return new() { Success = false, Message = ex.Message };
             }
         }
+        public ServiceResult<WorkingHours> GetCarWorkshopWorkingHours(int id)
+        {
+            try
+            {
+                var workingHours = _carServiceRepository.GetCarWorkshopWorkingHours(id);
+                return new() { Success = true, Data = workingHours };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = ex.Message };
+            }
+        }
     }
 }

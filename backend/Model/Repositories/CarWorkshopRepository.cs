@@ -3,6 +3,8 @@ using Model.Entities.CarWorkshop;
 using Model.Entities.Filter;
 using Model.Exstensions;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Tls;
+using System.Data.SqlClient;
 namespace Model.Repositories
 {
     public class CarWorkshopRepository : ICarWorkshopRepository
@@ -48,16 +50,34 @@ namespace Model.Repositories
             sql.AddParameter("?sunday", sunday);
 
             _genericRepository.ExecuteNonQuery(sql);
-        }
-        public CarWorkshopDetails GetCarWorkshopDetails(int id){
-            var sql = new MySqlCommand($@"
-            SELECT 
+
+
+             var lastInsertedId = _genericRepository.GetLastInsertedId();
+
+    // Update the ServiceShop table with the WorkingHours ID
+    var updateSql = new MySqlCommand(@$"
+    UPDATE serviceshop
+    SET WorkingHoursId = ?workingHoursId
+    WHERE Id = ?carWorkshopId");
+
+    updateSql.AddParameter("?workingHoursId", lastInsertedId);
+    updateSql.AddParameter("?carWorkshopId", carWorkshopId);
+
+    _genericRepository.ExecuteNonQuery(updateSql);
+        
+    }
+        
+public CarWorkshopDetails GetCarWorkshopDetails(int id)
+{   
+       var sql = new MySqlCommand($@"
+        SELECT 
             sshp.CompanyName,
             sshp.Address,
             sshp.PhoneNumber,
             sshp.Email,
             sshp.Website,
             sshp.Description,
+            sc.Name AS Specialization,
             wh.Monday,
             wh.Tuesday,
             wh.Wednesday,
@@ -65,70 +85,44 @@ namespace Model.Repositories
             wh.Friday,
             wh.Saturday,
             wh.Sunday
-        FROM serviceshop sshp
-        LEFT JOIN workinghours wh ON sshp.Id = wh.ShopId
+        FROM serviceShop sshp
+        LEFT JOIN serviceshopspecialization sshpsc ON sshp.Id = sshpsc.ShopId
+        LEFT JOIN specializations sc ON sc.Id = sshpsc.SpecializationId
+        LEFT JOIN workinghours wh ON sshp.WorkingHoursId = wh.Id
         WHERE sshp.Id = ?id");
+        
+        sql.AddParameter("?id", id);
+        
+      var workingHours = GetCarWorkshopWorkingHours(id);
+        var carWorkshopDetails = _genericRepository.FetchSingle<CarWorkshopDetails>(sql);
+        carWorkshopDetails.WorkingHours = workingHours;
+        return carWorkshopDetails;
+        
+}
 
-    sql.Parameters.AddWithValue("?id", id);
-
-    using (var reader = sql.ExecuteReader())
-    {
-        if (reader.Read())
-        {
-            var carWorkshop = new CarWorkshopDetails
-            {
-                CompanyName = reader.GetString("CompanyName"),
-                Address = reader.GetString("Address"),
-                PhoneNumber = reader.GetString("PhoneNumber"),
-                Email = reader.GetString("Email"),
-                Website = reader.GetString("Website"),
-                Description = reader.GetString("Description"),
-                WorkingHours = new WorkingHours
-                {
-                    Monday = reader.GetString("Monday"),
-                    Tuesday = reader.GetString("Tuesday"),
-                    Wednesday = reader.GetString("Wednesday"),
-                    Thursday = reader.GetString("Thursday"),
-                    Friday = reader.GetString("Friday"),
-                    Saturday = reader.GetString("Saturday"),
-                    Sunday = reader.GetString("Sunday")
-                }
-            };
-
-            return carWorkshop;
-        }
+public WorkingHours GetCarWorkshopWorkingHours(int id)
+{
+   var sql = new MySqlCommand($@"
+        SELECT 
+            Monday,
+            Tuesday,
+            Wednesday,
+            Thursday,
+            Friday,
+            Saturday,
+            Sunday
+        FROM workinghours
+        WHERE ShopId = ?id");
+        
+        sql.AddParameter("?id", id);
+        
+        return _genericRepository.FetchSingle<WorkingHours>(sql);
     }
-            
-            
-             
 
 
-            return _genericRepository.FetchSingle<CarWorkshopDetails>(sql);
-        }
 
-        public CarWorkshopWorkingHoursData GetWorkingHours(int carWorkshopId) // Add return type for the method
-        {
-            var sql = new MySqlCommand($@"
-            SELECT Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-            FROM workinghours
-            WHERE ShopId = ?carWorkshopId");
 
-            sql.AddParameter("?carWorkshopId", carWorkshopId);
-            
-            return _genericRepository.FetchSingle<CarWorkshopWorkingHoursData>(sql);
-            }
 
-        public bool CheckIfCompanyNameExists(string companyName) // Fix typo in method name
-        {
-            var sql = new MySqlCommand($@"
-            SELECT COUNT(*)
-            FROM {TABLE_NAME}
-            WHERE CompanyName = ?companyName");
-
-            sql.AddParameter("?companyName", companyName);
-
-            return _genericRepository.FetchSingleInt(sql) > 0;
-        }
 
         public CarWorkshopBasicData GetBasicByUsername(string username)
         {
@@ -223,8 +217,8 @@ namespace Model.Repositories
             throw new NotImplementedException();
         }
 
-       
-    }
+        
 
   
+}
 }
