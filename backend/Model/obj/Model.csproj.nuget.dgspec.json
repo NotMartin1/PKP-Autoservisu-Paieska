@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj": {}
+    "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj": {
+    "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj",
+        "projectPath": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\Model.csproj",
         "packagesPath": "C:\\Users\\Pijus\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\obj\\",
+        "outputPath": "C:\\Users\\Pijus\\Documents\\GitHub\\PKP-Autoservisu-Paieska\\backend\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Pijus\\AppData\\Roaming\\NuGet\\NuGet.Config"
