@@ -121,5 +121,34 @@ namespace Model.Repositories
             var connectionString = _configuration.GetConnectionString(CONNECTION_STRING_IDENTIFIER);
             return new MySqlConnection(connectionString);
         }
+
+        public object GetLastInsertedId()
+        {
+            using (var connection = GetSqlConnection())
+            {
+                connection.Open();
+                var command = new MySqlCommand("SELECT LAST_INSERT_ID();", connection);
+                return command.ExecuteScalar();
+            }
+        }
+
+        public object ExecuteReader(MySqlCommand sql)
+        {
+            using (var connection = GetSqlConnection())
+            {
+                connection.Open();
+                sql.Connection = connection;
+
+                using (var reader = sql.ExecuteReader())
+                {
+                    return reader;
+                }
+            }
+        }
+
+        IDisposable IGenericRepository.GetSqlConnection()
+        {
+            return GetSqlConnection();
+        }
     }
 }
