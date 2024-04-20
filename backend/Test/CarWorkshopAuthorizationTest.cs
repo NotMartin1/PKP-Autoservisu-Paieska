@@ -98,7 +98,7 @@ namespace Test
                 Username = CarWorkshopAuthorizationData.username,
                 Password = Guid.NewGuid().ToString(),
                 AdditionalData = new() {
-                    CompanyName = $"{CarWorkshopAuthorizationData.username}-company",
+                    CompanyName = $"{CarWorkshopAuthorizationData.username}-{Guid.NewGuid}-company",
                     PhoneNumber = PhoneNumberGenerator.GenerateLithuanianPhoneNumber(),
                     Email = email 
                 },
