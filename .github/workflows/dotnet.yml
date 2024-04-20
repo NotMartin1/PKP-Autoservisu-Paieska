@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore backend/PKP.sln
     - name: Build
       run: dotnet build backend/PKP.sln --no-restore
     - name: Test
