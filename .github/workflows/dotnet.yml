@@ -7,21 +7,6 @@ on:
     branches: [ "master" ]
 
 jobs:
-  test:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Pull Newest Changes
-        run: git pull
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-      - name: Test
-        run: dotnet test --no-build backend/PKP.sln --verbosity normal
-        
   build:
     runs-on: self-hosted
     steps:
@@ -38,3 +23,21 @@ jobs:
         run: dotnet restore backend/PKP.sln
       - name: Build
         run: dotnet build backend/PKP.sln --no-restore
+
+  test:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Wait for build to complete
+        run: echo "Build job completed successfully"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Pull Newest Changes
+        run: git pull
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Test
+        run: dotnet test --no-build backend/PKP.sln --verbosity normal
