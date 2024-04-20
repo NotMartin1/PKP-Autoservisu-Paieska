@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies and build project
         working-directory: react-app
         run: |
-          npm install
+          npm install --force
           npm run build
 
   net-build:
