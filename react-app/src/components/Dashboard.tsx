@@ -1,6 +1,6 @@
 import SummaryCart from './SummaryCard';
 
-const Dashboard = props => {
+const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
