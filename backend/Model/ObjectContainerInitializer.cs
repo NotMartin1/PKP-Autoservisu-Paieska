@@ -17,6 +17,8 @@ namespace Model
             container.Register<ICarService, CarService>();
             container.Register<ICarMakeRepository, CarMakeRepository>();
             container.Register<ICarRepository, CarRepository>();
+            container.Register<IOrdersService, OrdersService>();
+            container.Register<IOrdersRepository, OrdersRepository>();
         }
     }
 }

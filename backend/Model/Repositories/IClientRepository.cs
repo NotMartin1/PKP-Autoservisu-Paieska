@@ -9,5 +9,6 @@ namespace Model.Repositories
         bool CheckIfExsitsByUsername(string username);
         bool ValidateCredentials(string username, string password);
         bool CheckIfExsitsById(int id);
+        ClientBasicData GetBasicById(int id);
     }
 }

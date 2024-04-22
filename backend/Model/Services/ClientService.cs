@@ -106,5 +106,7 @@ namespace Model.Services
         }
 
         public bool CheckIfExsitsById(int id) => _clientRepository.CheckIfExsitsById(id);
+
+        public ClientBasicData GetBasicById(int id) => _clientRepository.GetBasicById(id);
     }
 }
