@@ -13,6 +13,7 @@ namespace Test
         private readonly IClientRepository _clientRepository;
         private readonly ICarRepository _carRepository;
         private readonly ICarMakeRepository _carMakeRepository;
+        private readonly IOrdersRepository _orderRepository;
 
         public OrderTest()
         {
@@ -22,6 +23,7 @@ namespace Test
             _clientRepository = container.GetInstance<IClientRepository>();
             _carMakeRepository = container.GetInstance<ICarMakeRepository>();
             _carRepository = container.GetInstance<ICarRepository>();
+            _orderRepository = container.GetInstance<IOrdersRepository>();
         }
 
         [TestMethod]
@@ -91,6 +93,59 @@ namespace Test
             });
 
             Assert.AreEqual(result?.Data, OrderCreateResult.Success);
+        }
+
+        [TestMethod]
+        public void OrderCancelValidationFailed()
+        {
+            var result = _ordersService.CancelOrder(default(int));
+            Assert.AreEqual(result?.Data, OrderCancelResult.ValidationFailed);
+        }
+
+        [TestMethod]
+        public void OrderCancelNotFound()
+        {
+            var result = _ordersService.CancelOrder(int.MaxValue - 1);
+            Assert.AreEqual(result?.Data, OrderCancelResult.OrderNotFound);
+        }
+
+        [TestMethod]
+        public void OrderCancelAlreadyCancelled()
+        {
+            var clientId = 10001;
+            _orderRepository.Insert(new OrderCreateRequest
+            {
+                CarId = clientId,
+                ClientId = clientId,
+                ArrivalTime = DateTime.Now,
+                Description = "test",
+                ServiceId = 1
+            });
+
+            var order = _orderRepository.GetClientOrders(clientId).LastOrDefault();
+
+            _ordersService.CancelOrder(order.Id);
+            var result = _ordersService.CancelOrder(order.Id);
+            Assert.AreEqual(result?.Data, OrderCancelResult.AlreadyCancelled);
+        }
+
+        [TestMethod]
+        public void OrderCancelSuccess()
+        {
+            var clientId = 10001;
+            _orderRepository.Insert(new OrderCreateRequest
+            {
+                CarId = clientId,
+                ClientId = clientId,
+                ArrivalTime = DateTime.Now,
+                Description = "test",
+                ServiceId = 1
+            });
+
+            var order = _orderRepository.GetClientOrders(clientId).LastOrDefault();
+
+            var result = _ordersService.CancelOrder(order.Id);
+            Assert.AreEqual(result?.Data, OrderCancelResult.Success);
         }
 
         private int GetClientId(bool status)

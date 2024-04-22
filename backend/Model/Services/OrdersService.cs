@@ -49,7 +49,7 @@ namespace Model.Services
             }
             catch (Exception ex)
             {
-                return new() { Success = false, Message = "Technical Error Occurred" };
+                return new() { Success = false, Message = "Technical Error Occurred", Data = OrderCreateResult.UnknownError };
             }
         }
 
@@ -69,5 +69,30 @@ namespace Model.Services
                 return new() { Success = false, Message = "Technical Error Occurred" };
             }
         }
+
+        public ServiceResult<OrderCancelResult> CancelOrder(int orderId)
+        {
+            try
+            {
+                if (orderId == 0)
+                    return new() { Success = false, Message = "OrderId is not specified", Data = OrderCancelResult.ValidationFailed };
+
+                var order = _ordersRepository.GetOrderById(orderId);
+                if (order == null)
+                    return new() { Success = false, Message = "Order not found", Data = OrderCancelResult.OrderNotFound };
+
+                if (order.OrderStatus == OrderStatus.Canceled)
+                    return new() { Success = false, Message = "Order already cancelled", Data = OrderCancelResult.AlreadyCancelled };
+
+                _ordersRepository.SetOrderStatus(orderId, OrderStatus.Canceled);
+
+                return new() { Success = true, Data = OrderCancelResult.Success };
+            }
+            catch (Exception ex)
+            {
+                return new() { Success = false, Message = "Technical Error Occurred", Data = OrderCancelResult.UnknownError };
+            }
+        }
+
     }
 }

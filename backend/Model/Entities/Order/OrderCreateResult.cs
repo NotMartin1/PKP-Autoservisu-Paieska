@@ -7,5 +7,6 @@
         ClientDisabled,
         CarNotFound,
         Success,
+        UnknownError,
     }
 }

@@ -29,5 +29,12 @@ namespace WebApi.Controllers
             var result = _orderService.GetClientOrders(clientId);
             return result;
         }
+
+        [HttpDelete("OrderCancel")]
+        public ServiceResult<OrderCancelResult> OrderCancel([FromQuery] int orderId)
+        {
+            var result = _orderService.CancelOrder(orderId);
+            return result;
+        }
     }
 }
