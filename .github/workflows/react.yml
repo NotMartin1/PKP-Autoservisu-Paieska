@@ -9,7 +9,6 @@ on:
 jobs:
   react-build:
     runs-on: self-hosted
-    needs: react-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,6 +20,7 @@ jobs:
           
   react-test:
     runs-on: self-hosted
+    needs: react-build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
