@@ -1,0 +1,58 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  react-test:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies and build project
+        working-directory: react-app
+        run: |
+          npm install --force
+          npm run test
+
+  react-build:
+    runs-on: self-hosted
+    needs: react-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies and build project
+        working-directory: react-app
+        run: |
+          npm install --force
+          npm run build
+
+  net-build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Pull Newest Changes
+        run: git pull
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore backend/PKP.sln
+      - name: Build
+        run: dotnet build backend/PKP.sln --no-restore
+        
+  net-test:
+    needs: net-build
+    runs-on: self-hosted
+    steps:
+      - name: Wait for build to complete
+        run: echo "Build job completed successfully"
+      - name: Test
+        run: dotnet test --no-build backend/PKP.sln --verbosity normal

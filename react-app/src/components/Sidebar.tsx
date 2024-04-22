@@ -1,6 +1,4 @@
-//@ts-nocheck
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router';
 
 const sidebarItemGroups = [
   {
@@ -31,16 +29,10 @@ const sidebarItemGroups = [
   }
 ];
 
-const Sidebar = props => {
+const Sidebar = () => {
 
   const history = useHistory();
-  const [activeTab, setActiveTab] = useState(sidebarItemGroups.find(x => x.IsDefaultActive));
- 
-  useEffect(() => {
-    const allItems = sidebarItemGroups.flatMap(group => group.Items);
-    const activeItem = allItems.find(item => item.IsDefaultActive);
-    setActiveTab(activeItem);
-  }, []);
+
 
   return (
     <div className="sidebar">
@@ -50,10 +42,10 @@ const Sidebar = props => {
           <div key={groupIndex}>
             <div className="sidebar-splitter"></div>
             {group.Items.map((item, itemIndex) => (
-              <div key={itemIndex} className={`${item === activeTab ? 'sidebar-activeItem' : ''}`}>
+              <div key={itemIndex} className={`${'sidebar-activeItem'}`}>
                 <div    
                   className="sidebar-item"
-                  onClick={() => { history.push(item.Route); setActiveTab(item); }}>
+                  onClick={() => { history.push(item.Route); }}>
                   <p>{item.Label}</p>
                 </div>
               </div>

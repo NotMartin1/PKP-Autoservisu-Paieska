@@ -1,10 +1,11 @@
-import { Col, Input, Label, Row } from 'reactstrap';
+import {Input, Label, Row } from 'reactstrap';
+import React, { FocusEvent } from 'react';
 
 interface FormInput {
     label?: string,
     isMandatory?: boolean,
-    onChange?: (event: any) => void,
-    onBlur?: (event: any) => void,
+    onChange?: (value: string) => void,
+    onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
     isPassword?: boolean,
     additionalClassname?: string,
     value?: string | null,
@@ -20,7 +21,7 @@ enum InputType {
     date = 'date',
     datetimelocal = 'datetime-local',
     email = 'email',
-    file = 'file',
+    file = 'file',                  
     hidden = 'hidden',
     image = 'image',
     month = 'month',

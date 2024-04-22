@@ -1,10 +1,8 @@
 
 import { useState } from 'react';
 import { Col, Row } from 'reactstrap';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
 import { setLogin, setToken } from 'store/slices/authSlice';
-
 import { ApiService } from 'services/ApiService';
 
 import { Path } from './constants/StaticPaths';
@@ -12,10 +10,16 @@ import { Path } from './constants/StaticPaths';
 import Button from '../shared-components/src/Button';
 import CenteredForm from '../shared-components/src/CenteredForm';
 import FormInput from '../shared-components/src/FormInput';
+import { useHistory } from 'react-router';
+
+interface InputState {
+  value: string | null;
+  invalid: boolean;
+}
 
 const Login = () => {
-  const [loginState, setLoginState] = useState({ value: null, invalid: false });
-  const [passwordState, setPasswordState] = useState({ value: null, invalid: false });
+  const [loginState, setLoginState] = useState<InputState>({ value: null, invalid: false });
+  const [passwordState, setPasswordState] = useState<InputState>({ value: null, invalid: false });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const history = useHistory();
@@ -38,7 +42,7 @@ const Login = () => {
           setPasswordState({ value: null, invalid: false });
         }
       })
-      .catch(error => setErrorMessage('Technical error occurred'));
+      .catch(() => setErrorMessage('Technical error occurred'));
   };
 
   const onLogin = () => {

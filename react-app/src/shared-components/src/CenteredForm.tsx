@@ -1,5 +1,7 @@
+import React from 'react';
+
 interface CenteredFormProps {
-    children?: any,
+    children?: React.ReactNode,
 }
 
 const CenteredForm: React.FC<CenteredFormProps> = (props) => {

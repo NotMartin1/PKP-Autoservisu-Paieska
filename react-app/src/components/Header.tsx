@@ -1,5 +1,5 @@
 
-const Header = props => {
+const Header = () => {
   return (
     <div className="navigation-header">
       <div className='navigaton-header-content'></div>

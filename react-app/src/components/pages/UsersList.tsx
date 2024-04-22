@@ -1,9 +1,21 @@
 //@ts-nocheck
 import { useEffect, useState } from 'react';
 
+import { ApiService } from 'services/ApiService';
+
 const UsersList = props => {
 
   const [users, setUsers] = useState([]);
+
+  const apiService = ApiService();
+
+  useEffect(() => {
+    apiService.get('user/list')
+      .then(data => {
+        setUsers(data);
+      })
+      .catch(error => console.log(`Failed to load users due to ${error}`));
+  }, []);
 
   if (!users || users.length == 0)
     return (
