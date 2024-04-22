@@ -8,17 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  react-test:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies and build project
-        working-directory: react-app
-        run: |
-          npm install --force
-          npm run test
-
   react-build:
     runs-on: self-hosted
     needs: react-test
@@ -30,6 +19,16 @@ jobs:
         run: |
           npm install --force
           npm run build
+          
+  react-test:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies and build project
+        working-directory: react-app
+        run: |
+          npm run test
 
   net-build:
     runs-on: self-hosted
