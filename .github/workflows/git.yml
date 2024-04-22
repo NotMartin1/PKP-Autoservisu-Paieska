@@ -9,7 +9,7 @@ on:
 
 jobs:
   react-build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
           npm run build
           
   react-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: react-build
     steps:
       - name: Checkout code
