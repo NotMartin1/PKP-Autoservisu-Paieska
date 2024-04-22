@@ -32,6 +32,7 @@ export const ApiService = () => {
     });
     checkResponseStatus(response);
     const responseData = await response.json();
+    console.log(responseData);
     return responseData;
   };
 

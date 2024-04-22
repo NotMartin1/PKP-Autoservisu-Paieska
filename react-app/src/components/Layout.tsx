@@ -12,11 +12,7 @@ const Layout = props => {
 
   return (
     <>
-      { !isLoginPage && <Sidebar/> }
-      <Container>
-        { !isLoginPage && <Header/>}
-        {children}
-      </Container>
+      {children}
     </>
   );
 

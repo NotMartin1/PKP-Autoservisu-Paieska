@@ -72,6 +72,7 @@ const FormInput: React.FC<FormInput> = (props) => {
           type={inputType}
           onChange={handleInputChange}
           onBlur={props.onBlur}
+          aria-label={label}
           value={value || ''}
           placeholder={placeholder}
           className={isInvalid ? 'is-invalid' : ''}
