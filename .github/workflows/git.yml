@@ -54,5 +54,7 @@ jobs:
     steps:
       - name: Wait for build to complete
         run: echo "Build job completed successfully"
+      - name: Restore dependencies
+        run: dotnet restore backend/PKP.sln
       - name: Test
         run: dotnet test --no-build backend/PKP.sln --verbosity normal
